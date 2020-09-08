@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import MapComponent from '../components/MapComponent'
+import MainPageUnlogged from '../components/MainPageUnlogged'
 
 class MainPage extends Component {
     constructor(props) {
@@ -8,7 +9,10 @@ class MainPage extends Component {
     }
     render() {
         return (<>
-            <MapComponent></MapComponent>
+            <div className="main-page">
+                <MainPageUnlogged></MainPageUnlogged>
+                {/* <MapComponent></MapComponent> */}
+            </div>
         </>);
     }
 }
