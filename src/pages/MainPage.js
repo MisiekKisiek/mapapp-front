@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import HeaderUnlogged from '../components/HeaderUnlogged'
 import MapComponent from '../components/MapComponent'
 import MainPageUnlogged from '../components/MainPageUnlogged'
 
@@ -10,6 +11,7 @@ class MainPage extends Component {
     render() {
         return (<>
             <div className="main-page">
+                <HeaderUnlogged></HeaderUnlogged>
                 <MainPageUnlogged></MainPageUnlogged>
                 {/* <MapComponent></MapComponent> */}
             </div>

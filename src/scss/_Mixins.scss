@@ -10,3 +10,67 @@
   align-items: $align-items;
   flex-wrap: $flex-wrap;
 }
+
+@mixin login-button($height: 34px, $width: 100px) {
+  width: $width;
+  height: $height;
+  margin-top: 40px;
+  line-height: $height;
+  border: none;
+  border-radius: calc(#{$height} / 2);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: 0.3s;
+  cursor: pointer;
+  &:hover {
+    background-color: coral;
+  }
+}
+
+@mixin arrow($top: 0, $left:0, $right:auto, $rotate: -135deg, $size: 40px){
+  position: absolute;
+  top: $top;
+  left:$left;
+  width:$size;
+  height: $size;
+  transform: rotate($rotate);
+  .unlogged__arrow{
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(40% 10%, 40% 35%, 100% 35%, 100% 65%, 40% 65%, 40% 90%, 0% 50%);
+    background-color: royalblue;
+  }
+  &:before{
+    content:"";
+    display:block;
+    position: absolute;
+    top: -15%;
+    left:-10%;
+    width: calc(#{$size} / 3.9);
+    height: calc(#{$size} / 3.9);
+    background-color: royalblue;
+    border-radius: 50%;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+  &:after{
+    content:"";
+    display:block;
+    position: absolute;
+    top: 90%;
+    left:-20%;
+    width: calc(#{$size} / 3);
+    height: calc(#{$size} / 3);
+    background-color: royalblue;
+    border-radius: 50%;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+  & + &{
+    top: -10px;
+    left:auto;
+    right:100px;
+    transform: rotate(-65deg);
+  }
+}

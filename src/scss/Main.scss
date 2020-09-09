@@ -1,11 +1,12 @@
 @import './Map';
 @import './Header';
+@import './MainPageUnlogged';
 @import './Footer';
 @import './Variables';
 
 //    font-family: 'Quicksand', sans-serif;
 //    font-family: 'Playfair Display', serif;
-//font-family: 'Roboto Slab', serif;
+//    font-family: 'Roboto Slab', serif;
 *{
     margin: 0;
     padding: 0;
@@ -15,9 +16,12 @@
 
 .App{
     height: 100vh;
+    box-shadow: 0 0 30px 10px inset rgba(66, 106, 226,0.2);
 }
 
 .main-page{
     height: calc(100% - #{$footerHeight1024});
+    max-width: 1440px;
     padding-top: $navHeight1024;
+    margin: auto;
 }

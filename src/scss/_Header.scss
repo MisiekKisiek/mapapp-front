@@ -28,6 +28,7 @@
         .header_unlogged__logo{
             flex-grow: 1;
             height: $navHeight1024;
+            margin-right: calc(100% - 70px * 3 - 30px);
         }
         .header-unlogged__link-login{
         }
