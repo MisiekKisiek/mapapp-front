@@ -1,8 +1,20 @@
 @import './Variables';
+@import './Keyframes';
 
 .unlogged__wrap{
-    height: 100%;
     @include flex-mother($justify-content: stretch);
+    height: 100%;
+    max-width: 1440px;
+    margin: auto;
+    padding-top: $navHeight1024;
+    .unlogged__canvas-particles{
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        z-index: -5;
+    }
     .unlogged__curtain{
         display: none;
         position: absolute;
@@ -63,21 +75,64 @@
         flex-grow: 1;
         @include flex-mother($justify-content: center, $align-items: center);
         .unlogged__mid-wrap{
+            @include flex-mother($flex-wrap: wrap);
             height: 64%;
             .unlogged__mid-title{
-                font-size: 30px;
+                flex-basis: 100%;
+                height: 60px;
+                line-height: 60px;
+                padding: 0 20px;
+                border: 2px solid rgba(0,0,0,0.5);
+                border-radius: 15px;
+                font-size: 25px;
                 color: rgb(64, 98, 197);
+                background-color: #fff;
                 text-shadow: 2px 2px 2px rgba(0,0,0,0.4);
             }
-            .unlogged__btn-register{
-            @include login-button($height: 34px, $width: 100px)
-        }
+            .unlogged__line-1{
+                position: relative;
+                top: -2px;
+                left: 1px;
+                flex-basis: 50%;
+                height: calc((100% - 60px) /2);
+                border-right: 2px solid rgba(0,0,0,0.5);
+                .unlogged__register-button{
+                    @include unlogged-mid-button();
+                }
+            }
+            .unlogged__line-2{
+                flex-basis: 50%;
+                height: calc((100% - 60px) /2);
+            }
+            .unlogged__line-3{
+                position: relative;
+                top: -2px;
+                left: 1px;
+                flex-basis: 50%;
+                height: calc((100% - 60px) /2);
+                border-right: 2px solid rgba(0,0,0,0.5);
+                .unlogged__login-button{
+                    @include unlogged-mid-button();
+                }
+            }
+            .unlogged__line-4{
+                flex-basis: 50%;
+                height: calc((100% - 60px) /2);
+            }
         }
     }
     .unlogged__right-section{
         flex-basis: 33%;
         @include flex-mother( $align-items: center);
-        // overflow: hidden;
+        .unlogged__check{
+            position: absolute;
+            top:-13%;
+            left:80px;
+            font-size: 40px;
+            font-weight: 900;
+            color: rgb(64, 98, 197);
+            animation: 6s arrow-bounce linear infinite;
+        }   
         .unlogged__arrow-wrap{
             @include arrow();
             & + .unlogged__arrow-wrap{
@@ -95,7 +150,7 @@
                 left:20px;
                 width: 300px;
                 transform: rotate(10deg) skew(10deg) scale(0.8);
-                box-shadow: 0 0 30px 2px rgba(0,0,0,0.3);
+                // box-shadow: 0 0 30px 2px rgba(0,0,0,0.3);
                 border: 3px solid royalblue;
                 border-radius: 3px;
                 transition: .5s;

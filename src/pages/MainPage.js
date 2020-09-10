@@ -1,7 +1,11 @@
-import React, { Component } from 'react'
-import HeaderUnlogged from '../components/HeaderUnlogged'
-import MapComponent from '../components/MapComponent'
-import MainPageUnlogged from '../components/MainPageUnlogged'
+import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
+
+//Components
+import HeaderUnlogged from '../components/HeaderUnlogged';
+import MainPageUnlogged from '../components/MainPageUnlogged';
+import HeaderLogged from '../components/HeaderLogged';
+import MapComponent from '../components/MapComponent';
 
 class MainPage extends Component {
     constructor(props) {
@@ -11,9 +15,20 @@ class MainPage extends Component {
     render() {
         return (<>
             <div className="main-page">
-                <HeaderUnlogged></HeaderUnlogged>
-                <MainPageUnlogged></MainPageUnlogged>
-                {/* <MapComponent></MapComponent> */}
+                <Switch>
+                    <Route path='/'>
+                        {localStorage.getItem('logged') === 'logged' ?
+                            (<>
+                                <HeaderUnlogged></HeaderUnlogged>
+                                <MainPageUnlogged></MainPageUnlogged>
+                            </>) :
+                            (<>
+                                <HeaderLogged></HeaderLogged>
+                                <MapComponent></MapComponent>
+                            </>)}
+
+                    </Route>
+                </Switch>
             </div>
         </>);
     }

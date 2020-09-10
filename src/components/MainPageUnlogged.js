@@ -1,15 +1,24 @@
-import React, { Component, useRef } from 'react'
+import React, { Component, useRef, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Image, Video, Transformation, CloudinaryContext } from 'cloudinary-react';
 
-import image1 from '../img/mainpageright1.jpg'
-import image2 from '../img/mainpageright2.jpg'
-import image3 from '../img/mainpageright3.jpg'
+//Images
+import image1 from '../img/mainpageright1.jpg';
+import image2 from '../img/mainpageright2.jpg';
+import image3 from '../img/mainpageright3.jpg';
+
+//Tools
+import ParticlesFunc from '../tools/particles';
 
 const MainPageUnlogged = () => {
-    const curtain = useRef(null)
-    const imageRef3 = useRef(null)
-    const imageRef2 = useRef(null)
-    const imageRef1 = useRef(null)
+    const curtain = useRef(null);
+    const imageRef3 = useRef(null);
+    const imageRef2 = useRef(null);
+    const imageRef1 = useRef(null);
+
+    useEffect(() => {
+        ParticlesFunc()
+    });
 
     const handleGaleryActive = (e) => {
         if (e.target.classList.contains('active')) {
@@ -31,6 +40,7 @@ const MainPageUnlogged = () => {
 
     return (<>
         <div className="unlogged__wrap">
+            <canvas className='unlogged__canvas-particles' id="myCanvas" width='1424' height='1200'></canvas>
             <div className="unlogged__curtain active" ref={curtain} onClick={(e) => { handleGaleryActive(e) }}></div>
             <section className="unlogged__left-section">
                 <div className="unlogged_left-wrap">
@@ -39,23 +49,30 @@ const MainPageUnlogged = () => {
                         <p>We are highly motivated bunch of people, who want to create something that can break IT market. One idea, few specialist, lots of hours and a thousands lines of code. </p>
                     </div>
                     <div className="unlogged__about unlogged__about-2">
-                        <h2 onClick={(e) => { handleAboutSection(e) }}>What we are doing?</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis quos incidunt numquam autem iure iusto architecto qui distinctio, beatae repellat animi, nostrum voluptatem quibusdam excepturi iste. Similique reprehenderit ipsam rerum.</p>
+                        <h2 onClick={(e) => { handleAboutSection(e) }}>What are we doing?</h2>
+                        <p>Right now we are mainly focus on Save The World project, that we believe in. We are almost sure, that this application can break the IT market! This project is written in JSES6 and HTML5 with CSS3 standards with REACT and REDUX technology on front-end and NODEJS on back-end.</p>
                     </div>
                     <div className="unlogged__about unlogged__about-3">
                         <h2 onClick={(e) => { handleAboutSection(e) }}>About STW App!</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis aliquam, quidem animi nihil dignissimos aut officiis iusto nesciunt dolore debitis eum doloribus quia voluptates. Rem enim nihil dicta nesciunt dignissimos?</p>
+                        <p>STW (Save The World) is created to help You remember all places you have been. With markups and descriptions where You can write Your memories, this memories will be saved for eternity!</p>
                     </div>
                     <div className="unlogged__about unlogged__about-4">
                         <h2 onClick={(e) => { handleAboutSection(e) }}>Stuff</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis voluptate porro alias qui. Provident, suscipit consequuntur hic id, minus nobis perferendis maiores aspernatur quia repellendus ullam, qui dolorem voluptates incidunt.</p>
+                        <p>The owner of STW (Save The World) app is MisiekKisiek company. If You have any sugestions or You want to work with us, send us a message on email adress: MiśkiKiśki@stw.com.</p>
                     </div>
                 </div>
             </section>
             <section className="unlogged__mid-section">
                 <div className="unlogged__mid-wrap">
-                    <h1 className="unlogged__mid-title">Join and Save Your World!</h1>
-                    <button className="unlogged__btn-register">Register</button>
+                    <h1 className="unlogged__mid-title">Join and Save The World!</h1>
+                    <div className="unlogged__line-1">
+                        <NavLink to='/register' className="unlogged__register-button">Register</NavLink>
+                    </div>
+                    <div className="unlogged__line-2"></div>
+                    <div className="unlogged__line-3">
+                        <NavLink to="/login" className="unlogged__login-button">Login</NavLink>
+                    </div>
+                    <div className="unlogged__line-4"></div>
                 </div>
             </section>
             <section className="unlogged__right-section">

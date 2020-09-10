@@ -3,6 +3,7 @@
 .map{
     // margin-top: 60px;
     height: calc(100vh - #{$footerHeight1024});
+    width: 100%;
     .leaflet-left{
         left: auto;
         right: 0;

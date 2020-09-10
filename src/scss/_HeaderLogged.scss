@@ -1,0 +1,40 @@
+@import './Variables';
+@import './Mixins';
+
+.header-logged{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: $navHeightLogged1024;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.01), 0 5px 15px rgba(0,0,0,0.35);
+    backdrop-filter: blur(50px);
+    background-color: rgba(54, 89, 192, 0.7);
+    z-index: 999;
+    .header-logged__wrap{
+        @include flex-mother($flex-direction: row,$align-items: center, $justify-content: stretch);
+        height: 100%;
+        list-style-type: none;
+        .header-logged__item{
+            @include flex-mother($align-items:center, $justify-content: center);
+            flex-basis: 240px;
+            & + .header-logged__item{
+                flex-grow: 1;
+                & + .header-logged__item{
+                    flex-grow: 0;
+                    flex-basis: 200px;
+                }
+            }
+            .header-logged__markups-drop{
+                @include header-logged-btn();
+            }
+            .header-logged__logo{
+            }
+            .header-logged__logout{
+                flex-grow: 200px;
+                @include header-logged-btn($height: 40px, $width: 120px);
+            }
+        }
+        
+    }
+}

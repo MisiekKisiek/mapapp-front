@@ -1,23 +1,29 @@
-import React from 'react';
-
+import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom'
 
-import Footer from './components/Footer'
+//Styles
 import './scss/Main.scss'
 
 //Components
 import MainPage from './pages/MainPage'
+import Footer from './components/Footer'
 
+class App extends Component {
+  state = {}
 
-function App() {
-  return (
-    <Router>
-      <div className="App">
-        <MainPage></MainPage>
-        <Footer></Footer>
-      </div>
-    </Router>
-  );
+  componentDidMount() {
+    localStorage.setItem('logged', 'unlogged');
+  }
+
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <MainPage></MainPage>
+          <Footer></Footer>
+        </div>
+      </Router>);
+  }
 }
 
 export default App;

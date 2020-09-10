@@ -1,8 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
 
-import '../scss/_Header.scss'
-
 const HeaderUnlogged = () => {
     return (<>
         <nav className="header-unlogged">
