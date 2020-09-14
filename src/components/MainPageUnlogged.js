@@ -1,6 +1,8 @@
 import React, { Component, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Image, Video, Transformation, CloudinaryContext } from 'cloudinary-react';
+
+//Components 
+import Header from './HeaderUnlogged';
 
 //Images
 import image1 from '../img/mainpageright1.jpg';
@@ -10,7 +12,7 @@ import image3 from '../img/mainpageright3.jpg';
 //Tools
 import ParticlesFunc from '../tools/particles';
 
-const MainPageUnlogged = () => {
+const MainPageUnlogged = ({ logIn }) => {
     const curtain = useRef(null);
     const imageRef3 = useRef(null);
     const imageRef2 = useRef(null);
@@ -39,7 +41,8 @@ const MainPageUnlogged = () => {
     }
 
     return (<>
-        <div className="unlogged__wrap">
+        <main className="unlogged__wrap">
+            <Header logIn={logIn}></Header>
             <canvas className='unlogged__canvas-particles' id="myCanvas" width='1424' height='1200'></canvas>
             <div className="unlogged__curtain active" ref={curtain} onClick={(e) => { handleGaleryActive(e) }}></div>
             <section className="unlogged__left-section">
@@ -89,7 +92,7 @@ const MainPageUnlogged = () => {
                     <img src={image1} alt='promo' ref={imageRef1} onClick={(e) => { handleGaleryActive(e) }} />
                 </div>
             </section>
-        </div>
+        </main>
     </>);
 }
 

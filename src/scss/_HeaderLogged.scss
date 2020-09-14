@@ -7,8 +7,9 @@
     left: 0;
     width: 100%;
     height: $navHeightLogged1024;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.01), 0 5px 15px rgba(0,0,0,0.35);
-    backdrop-filter: blur(50px);
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0,0,0,0.35);
+    -moz-backdrop-filter: blur(4px);
+    backdrop-filter: blur(2px);
     background-color: rgba(54, 89, 192, 0.7);
     z-index: 999;
     .header-logged__wrap{
@@ -17,6 +18,7 @@
         list-style-type: none;
         .header-logged__item{
             @include flex-mother($align-items:center, $justify-content: center);
+            position: relative;
             flex-basis: 240px;
             & + .header-logged__item{
                 flex-grow: 1;
@@ -25,8 +27,32 @@
                     flex-basis: 200px;
                 }
             }
-            .header-logged__markups-drop{
+            .header-logged__marker-drop{
                 @include header-logged-btn();
+                &:before, &:after{
+                    content:"";
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    right: 50px;
+                    height: 20px;
+                    width: 20px;
+                    margin-top: 10px;
+                    clip-path: polygon(60% 0, 80% 50%, 60% 100%, 40% 100%, 60% 50%, 40% 0);
+                    background-color: #fff;
+                    transition: .3s;
+                    span{
+                        right: 56px;
+                    }
+                }
+                &:after{
+                    right: 56px;
+                }
+                &.active{
+                    &:before, &:after{
+                        clip-path: polygon(60% 0, 40% 50%, 60% 100%, 40% 100%, 20% 50%, 40% 0);
+                    }
+                }
             }
             .header-logged__logo{
             }

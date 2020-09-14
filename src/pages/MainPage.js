@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 //Components
-import HeaderUnlogged from '../components/HeaderUnlogged';
 import MainPageUnlogged from '../components/MainPageUnlogged';
-import HeaderLogged from '../components/HeaderLogged';
-import MapComponent from '../components/MapComponent';
+import MainPageLogged from '../components/MainPageLogged';
 
 class MainPage extends Component {
     constructor(props) {
@@ -17,14 +15,13 @@ class MainPage extends Component {
             <div className="main-page">
                 <Switch>
                     <Route path='/'>
-                        {localStorage.getItem('logged') === 'logged' ?
+                        {localStorage.getItem('logged') === 'unlogged' ?
                             (<>
-                                <HeaderUnlogged></HeaderUnlogged>
-                                <MainPageUnlogged></MainPageUnlogged>
+                                <MainPageUnlogged logIn={this.props.logIn}></MainPageUnlogged>
                             </>) :
                             (<>
-                                <HeaderLogged></HeaderLogged>
-                                <MapComponent></MapComponent>
+                                {/* <HeaderLogged logOut={this.props.logOut}></HeaderLogged> */}
+                                <MainPageLogged logOut={this.props.logOut}></MainPageLogged>
                             </>)}
 
                     </Route>

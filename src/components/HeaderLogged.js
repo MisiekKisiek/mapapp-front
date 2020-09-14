@@ -1,14 +1,18 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const HeaderLogged = () => {
+const HeaderLogged = ({ logOut, handleShowMarkerList }) => {
+
     return (
         <>
             <nav className="header-logged">
                 <ul className="header-logged__wrap">
                     <li className="header-logged__item">
-                        <button className="header-logged__markups-drop">
-                            Markups
+                        <button className="header-logged__marker-drop active" onClick={(e) => {
+                            e.target.classList.toggle('active')
+                            handleShowMarkerList();
+                        }}>
+                            Markers
                         </button>
                     </li>
                     <li className="header-logged__item">
@@ -17,7 +21,10 @@ const HeaderLogged = () => {
                         </div>
                     </li>
                     <li className="header-logged__item">
-                        <button className="header-logged__logout">Log out</button>
+                        <button className="header-logged__logout" onClick={(e) => {
+                            e.preventDefault();
+                            logOut()
+                        }}>Log out</button>
                     </li>
                 </ul>
             </nav>

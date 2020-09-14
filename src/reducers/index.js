@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { markups } from "./markups";
+import { markers } from "./markers";
 
 export default combineReducers({
-    markups
+    markers
 });

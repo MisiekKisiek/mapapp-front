@@ -11,15 +11,25 @@ import Footer from './components/Footer'
 class App extends Component {
   state = {}
 
-  componentDidMount() {
+  logOut = () => {
     localStorage.setItem('logged', 'unlogged');
+    this.forceUpdate();
+  }
+
+  logIn = () => {
+    localStorage.setItem('logged', 'logged');
+    this.forceUpdate();
+  }
+
+  componentDidMount() {
+    localStorage.setItem('logged', 'logged');
   }
 
   render() {
     return (
       <Router>
         <div className="App">
-          <MainPage></MainPage>
+          <MainPage logOut={this.logOut} logIn={this.logIn}></MainPage>
           <Footer></Footer>
         </div>
       </Router>);

@@ -1,0 +1,47 @@
+@import './Mixins';
+@import './Variables';
+
+.marker{
+    @include flex-mother($align-items:center, $justify-content:center);
+    position: absolute;
+    top:0;
+    left:-$markerListWidth1024;
+    height: calc(100vh - #{$footerHeight1024} - #{$navHeightLogged1024});
+    width: $markerListWidth1024;
+    margin-top: $navHeightLogged1024;
+    -moz-backdrop-filter: blur(4px);
+    backdrop-filter: blur(2px);
+    background-color: rgba(54, 89, 192, 0.7);
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
+    transition: .3s;
+    z-index: 666;
+    &.active{
+        left:0;
+    }
+    .marker__wrap{
+        width: 100%;
+        height: 100%;
+        .marker__list{
+            width: calc(100% - 60px);
+            height: calc(100% - 60px);
+            margin:30px;
+            border-radius: 5px;
+            list-style-type: none;
+            .marker__item{
+                height: 30px;
+                line-height: 30px;
+                border-radius: 20px;
+                overflow: hidden;
+                background-color: rgb(82, 114, 209);
+                box-shadow: 0 0 10px 2px inset rgb(164, 176, 209);
+                .marker__item-title{
+                    height: 30px;
+                    line-height: 30px;
+                    border-radius: 20px;
+                }
+                .marker__item-info{}
+            }
+        }
+    }
+    
+}
