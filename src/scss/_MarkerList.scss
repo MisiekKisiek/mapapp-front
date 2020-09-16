@@ -29,6 +29,7 @@
             list-style-type: none;
             .marker__item{
                 height: 30px;
+                margin: 10px 0;
                 line-height: 30px;
                 border-radius: 20px;
                 overflow: hidden;
@@ -38,8 +39,13 @@
                     height: 30px;
                     line-height: 30px;
                     border-radius: 20px;
+                    font-size: 16px;
+                    text-align: center;
+                    color: #fff;
                 }
-                .marker__item-info{}
+                .marker__item-info{
+
+                }
             }
         }
     }

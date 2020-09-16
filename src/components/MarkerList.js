@@ -1,20 +1,24 @@
-import React from 'react';
-import Marker from './MarkerItem';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-const MarkerList = ({ markers }) => {
+//Components
+import Marker from './MarkerListItem';
+
+
+const MarkerList = ({ markersAll }) => {
 
     const renderMarkerItems = () => {
-        console.log(markers)
+        // const markers = <li>elko</li>;
+        const markers = markersAll.map(e => <Marker name={e.name}></Marker>);
+        console.log('dupsko', markers);
+        return markers;
     }
+
     return (<>
         <aside className="marker active">
             <div className="marker__wrap">
                 <ul className="marker__list">
-                    {renderMarkerItems}
-                    <li className="marker__item">
-                        <h2 className="marker__item-title"></h2>
-                    </li>
+                    {renderMarkerItems()}
                 </ul>
             </div>
         </aside>
@@ -22,7 +26,7 @@ const MarkerList = ({ markers }) => {
 }
 
 const MSTP = state => {
-    const { markers } = state
+    return { markersAll: state.markers }
 }
 
 export default connect(MSTP)(MarkerList);

@@ -11,6 +11,10 @@ import Footer from './components/Footer'
 class App extends Component {
   state = {}
 
+  forceUpdateTest = () => {
+    this.forceUpdate();
+  }
+
   logOut = () => {
     localStorage.setItem('logged', 'unlogged');
     this.forceUpdate();

@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+//Apiprefix
+import { API } from '../tools/apiPrefixes';
+
+//Actions
+import { getMarkers } from '../actions/markers.action';
 
 //Components
 import Header from './HeaderLogged';
@@ -11,10 +18,24 @@ class MainPageLogged extends Component {
         this.state = {}
     }
 
+    getAllTasks = async () => {
+        await fetch(`${API}/api/getAllMarkers`)
+            .then(
+                e => e.json())
+            .then(user => {
+                this.props.getMarkers(user.markers);
+            })
+    }
+
     handleShowMarkerList = () => {
         const markerList = document.querySelector('.marker');
         markerList.classList.toggle('active');
     }
+
+    componentDidMount() {
+        this.getAllTasks();
+    }
+
     render() {
         return (<>
             <main className="logged__wrap">
@@ -26,4 +47,14 @@ class MainPageLogged extends Component {
     }
 }
 
-export default MainPageLogged;
+const MSTP = state => {
+    return {
+        markersAll: state.markers
+    }
+};
+
+const MDTP = {
+    getMarkers
+}
+
+export default connect(MSTP, MDTP)(MainPageLogged);

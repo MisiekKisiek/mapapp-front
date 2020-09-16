@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { icon } from '../tools/iconMarker'
+import { connect } from 'react-redux';
 
 class MapComponent extends Component {
     constructor(props) {
@@ -7,18 +9,20 @@ class MapComponent extends Component {
         this.state = {
             lat: 52.21,
             lng: 21.02,
+            lat1: 52.21,
+            lng1: 21.02,
             zoom: 13,
         }
     }
 
     handleClick = (e) => {
-        console.log('marker', e)
-        // console.log('latlng', e.latlng)
         this.setState({ lat: e.latlng.lat, lng: e.latlng.lng });
+    }
+    handleClick1 = (e) => {
+        this.setState({ lat1: e.latlng.lat, lng1: e.latlng.lng });
     }
 
     handleZoom = (e) => {
-        console.log(e.target._animateToZoom)
         this.setState({ zoom: e.target._animateToZoom })
     }
 
@@ -29,14 +33,27 @@ class MapComponent extends Component {
                     attribution={'&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
                     url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
                 />
-                <Marker position={[this.state.lat, this.state.lng]} draggable={true} onmouseup={this.handleClick}>
+                <Marker position={[this.state.lat, this.state.lng]} icon={icon} draggable={true} onmouseup={this.handleClick}>
                     <Popup>
                         dfasfasfasf
                     </Popup>
                 </Marker>
+                {/* <Marker position={[this.state.lat1, this.state.lng1]} icon={icon} draggable={true} onmouseup={this.handleClick1}>
+                    <Popup>
+                        dfasfasfasf
+                    </Popup>
+                </Marker> */}
             </Map>
         </>);
     }
 }
 
-export default MapComponent;
+const MSTP = state => {
+    return {
+
+    }
+}
+
+const MDTP = {}
+
+export default connect(MSTP, MDTP)(MapComponent);
