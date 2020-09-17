@@ -13,6 +13,7 @@ import image3 from '../img/mainpageright3.jpg';
 import ParticlesFunc from '../tools/particles';
 
 const MainPageUnlogged = ({ logIn }) => {
+
     const curtain = useRef(null);
     const imageRef3 = useRef(null);
     const imageRef2 = useRef(null);
@@ -33,11 +34,10 @@ const MainPageUnlogged = ({ logIn }) => {
             curtain.current.classList.toggle('unlogged__curtain--active')
         }
     }
+
     const handleAboutSection = (e) => {
-        document.querySelectorAll('.unlogged__about').forEach(e => {
-            e.classList.remove('unlogged__about--active')
-        })
-        e.target.parentNode.classList.add('unlogged__about--active')
+        document.querySelector('.unlogged__about--active').classList.remove('unlogged__about--active');
+        e.target.parentNode.classList.add('unlogged__about--active');
     }
 
     return (<>

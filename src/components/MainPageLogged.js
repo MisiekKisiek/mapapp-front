@@ -15,33 +15,77 @@ import MarkerList from './MarkerList';
 class MainPageLogged extends Component {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+            curLat: 52,
+            curLng: 21,
+            curZoom: 10
+        }
     }
 
-    getAllTasks = async () => {
+    getAllMarkers = async () => {
         await fetch(`${API}/api/getAllMarkers`)
             .then(
                 e => e.json())
-            .then(user => {
-                this.props.getMarkers(user.markers);
+            .then(async user => {
+                await this.props.getMarkers(user.markers);
+                this.setState({
+                    curLat: this.props.markersAll[0].lat,
+                    curLng: this.props.markersAll[0].lng,
+                })
             })
+    }
+
+    editMarkerLocation = () => {
+
+    }
+
+    removeMarker = () => {
+
     }
 
     handleShowMarkerList = () => {
         const markerList = document.querySelector('.marker');
-        markerList.classList.toggle('active');
+        markerList.classList.toggle('marker--active');
+    }
+
+    handleMarkerClick = (e) => {
+        this.setState({ curLat: e.latlng.lat, curLng: e.latlng.lng });
+    }
+
+    handleZoom = (e) => {
+        this.setState({ curZoom: e.target._animateToZoom })
+    }
+
+    handleMarkerListActiveItem = (e) => {
+        document.querySelector('.marker__item--active').classList.remove('marker__item--active');
+        e.target.parentNode.classList.add('marker__item--active');
+        const findMarkerIndex = (element, givenElement) => {
+            return givenElement.target.parentNode.dataset.markerId === element.id
+        }
+        const lat = this.props.markersAll[this.props.markersAll.findIndex(el => findMarkerIndex(el, e))].lat;
+        const lng = this.props.markersAll[this.props.markersAll.findIndex(el => findMarkerIndex(el, e))].lng;
+        this.setState({ curLat: lat, curLng: lng, curZoom: 10 })
     }
 
     componentDidMount() {
-        this.getAllTasks();
+        this.getAllMarkers();
     }
 
     render() {
         return (<>
             <main className="logged__wrap">
-                <Header logOut={this.props.logOut} handleShowMarkerList={this.handleShowMarkerList}></Header>
-                <MapComponent></MapComponent>
-                <MarkerList></MarkerList>
+                <Header
+                    logOut={this.props.logOut}
+                    handleShowMarkerList={this.handleShowMarkerList}>
+                </Header>
+                <MapComponent
+                    curLat={this.state.curLat}
+                    curLng={this.state.curLng}
+                    curZoom={this.state.curZoom}
+                    handleZoom={this.handleZoom}
+                    handleMarkerClick={this.handleMarkerClick}>
+                </MapComponent>
+                <MarkerList handleMarkerListActiveItem={this.handleMarkerListActiveItem}></MarkerList>
             </main>
         </>);
     }

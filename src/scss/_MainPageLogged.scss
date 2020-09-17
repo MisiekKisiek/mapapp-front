@@ -1,17 +1,3 @@
 @import './Variables';
+@import './Mixins';
 
-.map{
-    // margin-top: 60px;
-    height: calc(100vh - #{$footerHeight1024});
-    width: 100%;
-    .leaflet-left{
-        left: auto;
-        right: 0;
-        margin-bottom: 30px;
-        margin-right: 20px;
-    }
-    .leaflet-top{
-        top:auto;
-        bottom: 0;
-    }
-}

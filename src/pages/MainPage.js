@@ -20,7 +20,6 @@ class MainPage extends Component {
                                 <MainPageUnlogged logIn={this.props.logIn}></MainPageUnlogged>
                             </>) :
                             (<>
-                                {/* <HeaderLogged logOut={this.props.logOut}></HeaderLogged> */}
                                 <MainPageLogged logOut={this.props.logOut}></MainPageLogged>
                             </>)}
 
