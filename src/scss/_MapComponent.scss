@@ -1,6 +1,11 @@
 @import './Variables';
 
 .map{
+    img.leaflet-marker-icon{
+        background-attachment: none;
+        background-color: transparent;
+        border: none;
+    }
     // margin-top: 60px;
     height: calc(100vh - #{$footerHeight1024});
     width: 100%;
@@ -14,4 +19,5 @@
         top:auto;
         bottom: 0;
     }
+
 }

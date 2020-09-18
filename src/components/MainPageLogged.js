@@ -57,14 +57,31 @@ class MainPageLogged extends Component {
     }
 
     handleMarkerListActiveItem = (e) => {
-        document.querySelector('.marker__item--active').classList.remove('marker__item--active');
-        e.target.parentNode.classList.add('marker__item--active');
-        const findMarkerIndex = (element, givenElement) => {
-            return givenElement.target.parentNode.dataset.markerId === element.id
+        const { markersAll } = this.props;
+        function findMarkerId(el) {
+            return e.target.parentElement.dataset.markerid === el.id
         }
-        const lat = this.props.markersAll[this.props.markersAll.findIndex(el => findMarkerIndex(el, e))].lat;
-        const lng = this.props.markersAll[this.props.markersAll.findIndex(el => findMarkerIndex(el, e))].lng;
-        this.setState({ curLat: lat, curLng: lng, curZoom: 10 })
+        const lat = markersAll[markersAll.findIndex(findMarkerId)] ? markersAll[markersAll.findIndex(findMarkerId)].lat : this.state.curLat;
+        const lng = markersAll[markersAll.findIndex(findMarkerId)] ? markersAll[markersAll.findIndex(findMarkerId)].lng : this.state.curLng;
+        this.setState({ curLat: lat, curLng: lng });
+        if (Array.from(e.target.parentElement.classList).includes('marker__item')) {
+            if (Array.from(e.target.parentElement.classList).includes('marker__item--active') && Array.from(e.target.classList).includes('marker__item-title')) {
+                e.target.parentElement.classList.remove('marker__item--active');
+            } else {
+                document.querySelectorAll('.marker__item').forEach(e => {
+                    e.classList.remove('marker__item--active');
+                })
+                e.target.parentElement.classList.add('marker__item--active')
+            }
+        }
+    }
+
+    handleMarkerMapActiveItem = (e) => {
+        document.querySelectorAll('.marker__item').forEach(e => {
+            e.classList.remove('marker__item--active');
+        });
+        document.querySelector(`[data-markerid='${e.target.options.id}'`).classList.add('marker__item--active');
+        this.handleMarkerClick(e)
     }
 
     componentDidMount() {
@@ -83,7 +100,9 @@ class MainPageLogged extends Component {
                     curLng={this.state.curLng}
                     curZoom={this.state.curZoom}
                     handleZoom={this.handleZoom}
-                    handleMarkerClick={this.handleMarkerClick}>
+                    handleMarkerClick={this.handleMarkerClick}
+                    handleMarkerMapActiveItem={this.handleMarkerMapActiveItem}
+                >
                 </MapComponent>
                 <MarkerList handleMarkerListActiveItem={this.handleMarkerListActiveItem}></MarkerList>
             </main>

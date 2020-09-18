@@ -4,19 +4,22 @@ import { icon } from '../tools/iconMarker'
 import { connect } from 'react-redux';
 
 
-const MapComponent = ({ curLat, curLng, curZoom, handleZoom, handleMarkerClick, markersAll }) => {
+const MapComponent = ({ curLat, curLng, curZoom, handleZoom, handleMarkerClick, handleMarkerMapActiveItem, markersAll }) => {
 
     const renderAllMarkers = () => {
         const markers = markersAll.map((e, index) =>
             <Marker
                 key={e.id}
+                id={e.id}
                 position={[e.lat, e.lng]}
                 icon={icon}
                 draggable={true}
                 onmouseup={handleMarkerClick}
-                id={e.id}
+                onclick={(e) => {
+                    handleMarkerMapActiveItem(e)
+                }}
             >
-                <Popup>{e.descripion}</Popup>
+                {/* <Popup >{e.descripion}</Popup> */}
             </Marker>);
         return markers
     }
