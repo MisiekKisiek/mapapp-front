@@ -22,21 +22,33 @@ class MainPageLogged extends Component {
         }
     }
 
-    getAllMarkers = async () => {
-        await fetch(`${API}/api/getAllMarkers`)
-            .then(
-                e => e.json())
-            .then(async user => {
-                await this.props.getMarkers(user.markers);
-                this.setState({
-                    curLat: this.props.markersAll[0].lat,
-                    curLng: this.props.markersAll[0].lng,
-                })
-            })
+    getMarkersAndUpdateCurrentZoom = async (user) => {
+        await this.props.getMarkers(user.markers);
+        this.setState({
+            curLat: this.props.markersAll[0].lat,
+            curLng: this.props.markersAll[0].lng,
+        })
     }
 
-    editMarkerLocation = () => {
+    getAllMarkers = async () => {
+        await fetch(`${API}/getAllMarkers`)
+            .then(e => e.json())
+            .then(this.getMarkersAndUpdateCurrentZoom)
+    }
 
+    editMarker = async (e) => {
+        const { lat, lng } = e.latlng;
+        const { id, name, place, description } = e.target.options
+        await fetch(`${API}/editMarker`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+            body: JSON.stringify({ markerId: id, name, lat, lng, place, description })
+        })
+            .then(e => e.json())
+            .then(user => { console.log(user.markers) })
     }
 
     removeMarker = () => {
@@ -102,6 +114,7 @@ class MainPageLogged extends Component {
                     handleZoom={this.handleZoom}
                     handleMarkerClick={this.handleMarkerClick}
                     handleMarkerMapActiveItem={this.handleMarkerMapActiveItem}
+                    editMarker={this.editMarker}
                 >
                 </MapComponent>
                 <MarkerList handleMarkerListActiveItem={this.handleMarkerListActiveItem}></MarkerList>
