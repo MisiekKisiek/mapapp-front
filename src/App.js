@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom';
 
 //Styles
 import './scss/Main.scss'
@@ -16,17 +16,19 @@ class App extends Component {
   }
 
   logOut = () => {
-    localStorage.setItem('logged', 'unlogged');
+    sessionStorage.setItem('logged', 'unlogged');
+    sessionStorage.setItem('token', '');
     this.forceUpdate();
   }
 
   logIn = () => {
-    localStorage.setItem('logged', 'logged');
+    sessionStorage.setItem('logged', 'logged');
     this.forceUpdate();
   }
 
   componentDidMount() {
-    localStorage.setItem('logged', 'logged');
+    sessionStorage.setItem('logged', 'unlogged');
+    sessionStorage.setItem('token', '');
   }
 
   render() {

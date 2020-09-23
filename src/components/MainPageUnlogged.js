@@ -12,7 +12,7 @@ import image3 from '../img/mainpageright3.jpg';
 //Tools
 import ParticlesFunc from '../tools/particles';
 
-const MainPageUnlogged = ({ logIn }) => {
+const MainPageUnlogged = () => {
 
     const curtain = useRef(null);
     const imageRef3 = useRef(null);
@@ -21,7 +21,7 @@ const MainPageUnlogged = ({ logIn }) => {
 
     useEffect(() => {
         ParticlesFunc()
-    });
+    }, []);
 
     const handleGaleryActive = (e) => {
         if (e.target.classList.contains('active')) {
@@ -42,8 +42,7 @@ const MainPageUnlogged = ({ logIn }) => {
 
     return (<>
         <main className="unlogged__wrap">
-            <Header logIn={logIn}></Header>
-            <canvas className='unlogged__canvas-particles' id="myCanvas" width='1424' height='1200'></canvas>
+            <canvas className='canvas-particles' id="myCanvas" width='1424' height='1200'></canvas>
             <div className="unlogged__curtain active" ref={curtain} onClick={(e) => { handleGaleryActive(e) }}></div>
             <section className="unlogged__left-section">
                 <div className="unlogged_left-wrap">
@@ -87,9 +86,9 @@ const MainPageUnlogged = ({ logIn }) => {
                         <div className="unlogged__arrow"></div>
                     </div>
                     <div className="unlogged__check">Check!</div>
-                    <img src={image3} alt='promo' ref={imageRef3} onClick={(e) => { handleGaleryActive(e) }} />
-                    <img src={image2} alt='promo' ref={imageRef2} onClick={(e) => { handleGaleryActive(e) }} />
-                    <img src={image1} alt='promo' ref={imageRef1} onClick={(e) => { handleGaleryActive(e) }} />
+                    <img src={image3} alt='promo' ref={imageRef3} onClick={handleGaleryActive} />
+                    <img src={image2} alt='promo' ref={imageRef2} onClick={handleGaleryActive} />
+                    <img src={image1} alt='promo' ref={imageRef1} onClick={handleGaleryActive} />
                 </div>
             </section>
         </main>

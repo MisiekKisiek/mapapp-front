@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-//Apiprefix
-import { API } from '../tools/apiPrefixes';
-
 //Actions
 import { getMarkers } from '../actions/markers.action';
 
@@ -11,6 +8,9 @@ import { getMarkers } from '../actions/markers.action';
 import Header from './HeaderLogged';
 import MapComponent from './MapComponent';
 import MarkerList from './MarkerList';
+
+//Tools
+import { API } from '../tools/apiPrefixes';
 
 class MainPageLogged extends Component {
     constructor(props) {
@@ -55,11 +55,6 @@ class MainPageLogged extends Component {
 
     }
 
-    handleShowMarkerList = () => {
-        const markerList = document.querySelector('.marker');
-        markerList.classList.toggle('marker--active');
-    }
-
     handleMarkerClick = (e) => {
         this.setState({ curLat: e.latlng.lat, curLng: e.latlng.lng });
     }
@@ -71,7 +66,7 @@ class MainPageLogged extends Component {
     handleMarkerListActiveItem = (e) => {
         const { markersAll } = this.props;
         function findMarkerId(el) {
-            return e.target.parentElement.dataset.markerid === el.id
+            return e.target.parentElement.dataset.markerid === el._id
         }
         const lat = markersAll[markersAll.findIndex(findMarkerId)] ? markersAll[markersAll.findIndex(findMarkerId)].lat : this.state.curLat;
         const lng = markersAll[markersAll.findIndex(findMarkerId)] ? markersAll[markersAll.findIndex(findMarkerId)].lng : this.state.curLng;
@@ -89,11 +84,14 @@ class MainPageLogged extends Component {
     }
 
     handleMarkerMapActiveItem = (e) => {
-        document.querySelectorAll('.marker__item').forEach(e => {
-            e.classList.remove('marker__item--active');
-        });
-        document.querySelector(`[data-markerid='${e.target.options.id}'`).classList.add('marker__item--active');
-        this.handleMarkerClick(e)
+        const items = document.querySelectorAll('.marker__item');
+        if (items !== null) {
+            items.forEach(e => {
+                e.classList.remove('marker__item--active');
+            });
+            document.querySelector(`[data-markerid='${e.target.options.id}'`).classList.add('marker__item--active');
+            this.handleMarkerClick(e)
+        }
     }
 
     componentDidMount() {
@@ -103,10 +101,6 @@ class MainPageLogged extends Component {
     render() {
         return (<>
             <main className="logged__wrap">
-                <Header
-                    logOut={this.props.logOut}
-                    handleShowMarkerList={this.handleShowMarkerList}>
-                </Header>
                 <MapComponent
                     curLat={this.state.curLat}
                     curLng={this.state.curLng}

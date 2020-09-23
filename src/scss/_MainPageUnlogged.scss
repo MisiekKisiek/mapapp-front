@@ -7,14 +7,6 @@
     max-width: 1440px;
     margin: auto;
     padding-top: $navHeight1024;
-    .unlogged__canvas-particles{
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 100%;
-        z-index: -5;
-    }
     .unlogged__curtain{
         display: none;
         position: absolute;
@@ -51,12 +43,12 @@
                 h2{
                     height: 30px;
                     line-height: 30px;
-                    color: #fff;
-                    background-color: rgb(82, 114, 209);
-                    box-shadow: 0 0 10px 2px inset rgb(164, 176, 209);
                     border-radius: 10px;
                     text-align: center;
                     font-size: 14px;
+                    color: #fff;
+                    background-color: rgb(82, 114, 209);
+                    box-shadow: 0 0 10px 2px inset rgb(164, 176, 209);
                     cursor: pointer;
                 }
                 p{

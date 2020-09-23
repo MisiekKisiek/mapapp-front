@@ -1,0 +1,85 @@
+@import './Mixins';
+@import './Variables';
+
+.login{
+    @include flex-mother($justify-content: center);
+    height: 100%;
+    padding-top: $navHeight1024;
+    .login__wrap{
+        @include flex-mother($flex-direction: column, $align-items: center);
+        height: 380px;
+        width: 260px;
+        margin-top: 200px;
+        box-shadow: -2px 2px 10px 2px rgba(164, 176, 209,0.4);
+        background-color: #fff;
+        .login__title{
+            margin: 30px 0 20px 0;
+            font-size: 30px;
+            color: rgb(82, 114, 209);
+        }
+        .login__alert{
+            height: 15px;
+            font-size: 10px;
+            color: red;
+        }
+        .login__form{
+            flex-grow: 1;
+            @include flex-mother($flex-direction:column,$align-items:center);
+            .login__input{
+                @include login-input();
+            }
+            .login__forgot-pass{
+                height: 15px;
+                font-size: 10px;
+                color: rgba(0,0,0,0.9);
+            }
+            button{
+                @include login-btn();
+            }
+        }
+    }
+}
+
+.register{
+    @include flex-mother($justify-content: center);
+    height: 100%;
+    padding-top: $navHeight1024;
+    .register__wrap{
+        @include flex-mother($flex-direction: column, $align-items: center);
+        height: 450px;
+        width: 260px;
+        margin-top: 200px;
+        box-shadow: -2px 2px 10px 2px rgba(164, 176, 209,0.4);
+        background-color: #fff;
+        .register__title{
+            margin: 30px 0 20px 0;
+            font-size: 30px;
+            color: rgb(82, 114, 209);
+        }
+        .register__alert{
+            height: 15px;
+            font-size: 10px;
+            color: red;
+        }
+        .register__form{
+            flex-grow: 1;
+            @include flex-mother($flex-direction:column,$align-items:center);
+            .register__input{
+                @include login-input();
+            }
+            .register__forgot-pass{
+                height: 15px;
+                font-size: 10px;
+                color: rgba(0,0,0,0.9);
+            }
+            .register__login-redirect{
+                height: 15px;
+                font-size: 10px;
+                color: rgba(0,0,0,0.9);
+            }
+            button{
+                @include login-btn(30px);
+            }
+        }
+    }
+}

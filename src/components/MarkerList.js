@@ -8,7 +8,7 @@ import Marker from './MarkerListItem';
 const MarkerList = ({ markersAll, handleMarkerListActiveItem }) => {
 
     const renderMarkerItems = () => {
-        const markers = markersAll.map((e, index) => <Marker key={e.id} id={e.id} marker={e} handleMarkerListActiveItem={handleMarkerListActiveItem} first={index === 0 ? true : false}></Marker>);
+        const markers = markersAll.map((e, index) => <Marker key={e._id} id={e._id} marker={e} handleMarkerListActiveItem={handleMarkerListActiveItem} first={index === 0 ? true : false}></Marker>);
         return markers;
     }
 
