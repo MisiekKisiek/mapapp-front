@@ -61,6 +61,10 @@
                     box-shadow: 0 0 10px 2px inset rgb(164, 176, 209);
                     color: #fff;
                     z-index: 111;
+                    transition: .3s;
+                    &:active{
+                        box-shadow: 0 0 25px 2px inset rgb(164, 176, 209);
+                    }
                 }
                 .marker__item-section{
                     position: absolute;

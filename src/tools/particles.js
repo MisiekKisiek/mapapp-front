@@ -1,4 +1,6 @@
-export default function () {
+let animaReqAniFrame = null;
+
+export const ParticlesFunc = () => {
     function line(particle, particle2) {
         context.beginPath();
         context.moveTo(particle.x, particle.y);
@@ -32,7 +34,7 @@ export default function () {
             if (particle.y > canvas.height - particleSize || particle.y < particleSize)
                 particle.vy = -particle.vy;
         }
-        window.requestAnimationFrame(animate);
+        animaReqAniFrame = window.requestAnimationFrame(animate);
     }
 
     let canvas = document.getElementById('myCanvas');
@@ -52,4 +54,9 @@ export default function () {
     }
     context.fillStyle = 'white';
     animate();
+}
+
+export const DisableParticlesFunc = () => {
+    console.log(animaReqAniFrame);
+    window.cancelAnimationFrame(animaReqAniFrame);
 }

@@ -23,17 +23,29 @@ class MainPageLogged extends Component {
     }
 
     getMarkersAndUpdateCurrentZoom = async (user) => {
-        await this.props.getMarkers(user.markers);
-        this.setState({
-            curLat: this.props.markersAll[0].lat,
-            curLng: this.props.markersAll[0].lng,
-        })
+        if (this.props.markersAll[0]) {
+            await this.props.getMarkers(user.markers);
+            this.setState({
+                curLat: this.props.markersAll[0].lat,
+                curLng: this.props.markersAll[0].lng,
+            })
+        }
     }
 
     getAllMarkers = async () => {
-        await fetch(`${API}/getAllMarkers`)
+        await fetch(`${API}/getAllMarkers`, {
+            headers: {
+                Authorization: `bearer ${sessionStorage.getItem("token")}`
+            }
+        })
             .then(e => e.json())
-            .then(this.getMarkersAndUpdateCurrentZoom)
+            .then(async (markers) => {
+                if (sessionStorage.getItem('logged') === "logged") {
+                    await this.props.getMarkers(markers.markers);
+                    this.getMarkersAndUpdateCurrentZoom(markers)
+                }
+            }
+            )
     }
 
     editMarker = async (e) => {
@@ -43,6 +55,7 @@ class MainPageLogged extends Component {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `bearer ${sessionStorage.getItem("token")}`,
             },
             mode: 'cors',
             body: JSON.stringify({ markerId: id, name, lat, lng, place, description })
@@ -55,30 +68,41 @@ class MainPageLogged extends Component {
 
     }
 
-    handleMarkerClick = (e) => {
-        this.setState({ curLat: e.latlng.lat, curLng: e.latlng.lng });
+    handleSetCenter = (lat, lng) => {
+        this.setState({ curLat: lat, curLng: lng });
     }
 
     handleZoom = (e) => {
         this.setState({ curZoom: e.target._animateToZoom })
     }
 
-    handleMarkerListActiveItem = (e) => {
+    handleMarkerListActiveItem = async (e) => {
         const { markersAll } = this.props;
+        const element = e.target;
         function findMarkerId(el) {
             return e.target.parentElement.dataset.markerid === el._id
         }
-        const lat = markersAll[markersAll.findIndex(findMarkerId)] ? markersAll[markersAll.findIndex(findMarkerId)].lat : this.state.curLat;
-        const lng = markersAll[markersAll.findIndex(findMarkerId)] ? markersAll[markersAll.findIndex(findMarkerId)].lng : this.state.curLng;
-        this.setState({ curLat: lat, curLng: lng });
-        if (Array.from(e.target.parentElement.classList).includes('marker__item')) {
-            if (Array.from(e.target.parentElement.classList).includes('marker__item--active') && Array.from(e.target.classList).includes('marker__item-title')) {
-                e.target.parentElement.classList.remove('marker__item--active');
-            } else {
-                document.querySelectorAll('.marker__item').forEach(e => {
-                    e.classList.remove('marker__item--active');
-                })
-                e.target.parentElement.classList.add('marker__item--active')
+        const lat = markersAll[markersAll.findIndex(findMarkerId)] ?
+            markersAll[markersAll.findIndex(findMarkerId)].lat :
+            this.state.curLat;
+        const lng = markersAll[markersAll.findIndex(findMarkerId)] ?
+            markersAll[markersAll.findIndex(findMarkerId)].lng :
+            this.state.curLng;
+        if (Array.from(element.classList).includes('marker__item-title')) {
+            this.setState({ curLat: lat, curLng: lng })
+        }
+        if ((lat === this.state.curLat &&
+            lng === this.state.curLng) ||
+            !Array.from(element.parentElement.classList).includes('marker__item--active')) {
+            if (Array.from(element.parentElement.classList).includes('marker__item')) {
+                if (Array.from(element.parentElement.classList).includes('marker__item--active') && Array.from(element.classList).includes('marker__item-title')) {
+                    element.parentElement.classList.remove('marker__item--active');
+                } else {
+                    document.querySelectorAll('.marker__item').forEach(e => {
+                        e.classList.remove('marker__item--active');
+                    })
+                    element.parentElement.classList.add('marker__item--active')
+                }
             }
         }
     }
@@ -106,7 +130,7 @@ class MainPageLogged extends Component {
                     curLng={this.state.curLng}
                     curZoom={this.state.curZoom}
                     handleZoom={this.handleZoom}
-                    handleMarkerClick={this.handleMarkerClick}
+                    handleSetCenter={this.handleSetCenter}
                     handleMarkerMapActiveItem={this.handleMarkerMapActiveItem}
                     editMarker={this.editMarker}
                 >

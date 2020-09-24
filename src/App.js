@@ -9,33 +9,42 @@ import MainPage from './pages/MainPage'
 import Footer from './components/Footer'
 
 class App extends Component {
-  state = {}
+  constructor() {
+    super();
+    this.state = {
+      logged: sessionStorage.getItem('logged')
+    }
+    this.forceUpdateApp = this.forceUpdateApp.bind(this)
+  }
 
-  forceUpdateTest = () => {
-    this.forceUpdate();
+  forceUpdateApp() {
+    this.setState({
+      logged: sessionStorage.getItem('logged')
+    })
   }
 
   logOut = () => {
-    sessionStorage.setItem('logged', 'unlogged');
-    sessionStorage.setItem('token', '');
-    this.forceUpdate();
-  }
-
-  logIn = () => {
-    sessionStorage.setItem('logged', 'logged');
-    this.forceUpdate();
+    sessionStorage.setItem("token", "");
+    sessionStorage.setItem("logged", "unlogged");
+    sessionStorage.setItem('user', "");
+    sessionStorage.setItem('email', "");
+    this.forceUpdateApp()
   }
 
   componentDidMount() {
-    sessionStorage.setItem('logged', 'unlogged');
-    sessionStorage.setItem('token', '');
+    if (!sessionStorage.setItem("token", "")) {
+      sessionStorage.setItem("token", "");
+      sessionStorage.setItem("logged", "logged");
+      sessionStorage.setItem('user', "");
+      sessionStorage.setItem('email', "");
+    }
   }
 
   render() {
     return (
       <Router>
         <div className="App">
-          <MainPage logOut={this.logOut} logIn={this.logIn}></MainPage>
+          <MainPage logged={this.state.logged} logOut={this.logOut} logIn={this.logIn} forceUpdateApp={this.forceUpdateApp}></MainPage>
           <Footer></Footer>
         </div>
       </Router>);

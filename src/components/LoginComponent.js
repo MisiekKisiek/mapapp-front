@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom'
 
 //Tools
-import ParticlesFunc from '../tools/particles';
+import { ParticlesFunc, DisableParticlesFunc } from '../tools/particles';
 import { AUTH } from '../tools/apiPrefixes';
 
-const LoginComponent = () => {
+const LoginComponent = ({ forceUpdateApp }) => {
 
     const [login, setlogin] = useState('');
     const [password, setpassword] = useState('');
 
     useEffect(() => {
         ParticlesFunc()
+        return (() => {
+            DisableParticlesFunc();
+        })
     }, []);
 
     const clearInputs = () => {
@@ -43,11 +46,20 @@ const LoginComponent = () => {
                 password,
             }),
         })
-            .then(e => e.json())
             .then(e => {
-                clearInputs();
-                sessionStorage.setItem('token', `${e.token}`)
+                if (e.ok === true) return e.json()
+                if (e.status === 401) throw Error('Username or login are invalid')
+                else throw Error('We have some problems, sorry')
             })
+            .then(async e => {
+                console.log('aaaaa')
+                await sessionStorage.setItem('token', `${e.token}`)
+                await sessionStorage.setItem('user', e.user);
+                await sessionStorage.setItem('email', e.email);
+                await sessionStorage.setItem("logged", "logged");
+                forceUpdateApp();
+                clearInputs();
+            }).catch(err => alert(err))
     }
 
     return (<>

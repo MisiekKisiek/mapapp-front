@@ -10,7 +10,7 @@ import image2 from '../img/mainpageright2.jpg';
 import image3 from '../img/mainpageright3.jpg';
 
 //Tools
-import ParticlesFunc from '../tools/particles';
+import { ParticlesFunc } from '../tools/particles';
 
 const MainPageUnlogged = () => {
 

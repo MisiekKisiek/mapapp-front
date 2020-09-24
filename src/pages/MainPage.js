@@ -33,10 +33,10 @@ class MainPage extends Component {
                 handleShowMarkerList={this.handleShowMarkerList}>
             </HeaderLogged>);
         const renderLoggedPage = sessionStorage.getItem('logged') === 'unlogged' ?
-            (<MainPageUnlogged logIn={this.props.logIn}></MainPageUnlogged>) :
-            (<MainPageLogged logOut={this.props.logOut}></MainPageLogged>);
+            (<MainPageUnlogged></MainPageUnlogged>) :
+            (<MainPageLogged logOut={this.props.logOut} ></MainPageLogged>);
         const renderLoginComponent = sessionStorage.getItem('logged') === 'unlogged' ?
-            (<LoginComponent></LoginComponent>) :
+            (<LoginComponent forceUpdateApp={this.props.forceUpdateApp}></LoginComponent>) :
             (<Redirect to='/'></Redirect>);
         const renderRegisterComponent = sessionStorage.getItem('logged') === 'unlogged' ?
             (<RegisterComponent></RegisterComponent>) :
@@ -50,7 +50,6 @@ class MainPage extends Component {
                     </Route>
                     <Route path="/login">
                         {renderLoginComponent}
-                        {/* <LoginComponent></LoginComponent> */}
                     </Route>
                     <Route path='/register'>
                         {renderRegisterComponent}

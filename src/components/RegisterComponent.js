@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom'
 
 //Tools
-import ParticlesFunc from '../tools/particles';
+import { ParticlesFunc, DisableParticlesFunc } from '../tools/particles';
 import { AUTH } from '../tools/apiPrefixes';
 
 const RegisterComponent = () => {
@@ -12,7 +12,10 @@ const RegisterComponent = () => {
     const [password, setpassword] = useState('');
 
     useEffect(() => {
-        ParticlesFunc()
+        ParticlesFunc();
+        return (() => {
+
+        })
     }, []);
 
     const clearInputs = () => {
