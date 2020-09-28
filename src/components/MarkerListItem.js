@@ -8,7 +8,7 @@ const MarkerListItem = ({ handleMarkerListActiveItem, marker, first, id }) => {
         <li className={`marker__item ${first ? 'marker__item--active' : ''}`} data-markerid={id} onClick={(e) => { handleMarkerListActiveItem(e) }}>
             <h2 className="marker__item-title">{name}</h2>
             <section className="marker__item-section">
-                <p className="marker__place">{place}</p>
+                <p className="marker__place">Place: <span>{place}</span></p>
                 <p className="marker__description">{description}</p>
             </section>
         </li>

@@ -22,9 +22,16 @@ class MainPageLogged extends Component {
         }
     }
 
-    getMarkersAndUpdateCurrentZoom = async (user) => {
+    getMarkersAndUpdateCurrentZoom = async (user, lat, lng) => {
         if (this.props.markersAll[0]) {
             await this.props.getMarkers(user.markers);
+            if (lat && lng) {
+                this.setState({
+                    curLat: lat,
+                    curLng: lng,
+                })
+                return
+            }
             this.setState({
                 curLat: this.props.markersAll[0].lat,
                 curLng: this.props.markersAll[0].lng,
@@ -32,24 +39,53 @@ class MainPageLogged extends Component {
         }
     }
 
-    getAllMarkers = async () => {
+    getAllMarkers = async (lat, lng) => {
         await fetch(`${API}/getAllMarkers`, {
             headers: {
                 Authorization: `bearer ${sessionStorage.getItem("token")}`
             }
         })
-            .then(e => e.json())
+            .then(e => {
+                if (e.ok) {
+                    return e.json()
+                } else {
+                    this.props.logOut();
+                    throw Error("You have been logged out")
+                }
+            })
             .then(async (markers) => {
                 if (sessionStorage.getItem('logged') === "logged") {
                     await this.props.getMarkers(markers.markers);
-                    this.getMarkersAndUpdateCurrentZoom(markers)
+                    this.getMarkersAndUpdateCurrentZoom(markers, lat, lng)
                 }
             }
-            )
+            ).catch(err => { console.log(err) })
+    }
+    getAllMarkersTEST = async (lat, lng) => {
+        await fetch(`${API}/getAllMarkers`, {
+            headers: {
+                Authorization: `bearer ${sessionStorage.getItem("token")}`
+            }
+        })
+            .then(e => {
+                if (e.ok) {
+                    return e.json()
+                } else {
+                    this.props.logOut();
+                    throw Error("You have been logged out")
+                }
+            })
+            .then(async (markers) => {
+                if (sessionStorage.getItem('logged') === "logged") {
+                    await this.props.getMarkers(markers.markers);
+                    this.getMarkersAndUpdateCurrentZoom(markers, lat, lng);
+                }
+            }
+            ).catch(err => { console.log(err) })
     }
 
     editMarker = async (e) => {
-        const { lat, lng } = e.latlng;
+        const { lat, lng } = e.target._latlng;
         const { id, name, place, description } = e.target.options
         await fetch(`${API}/editMarker`, {
             method: 'PUT',
@@ -60,8 +96,17 @@ class MainPageLogged extends Component {
             mode: 'cors',
             body: JSON.stringify({ markerId: id, name, lat, lng, place, description })
         })
-            .then(e => e.json())
-            .then(user => { console.log(user.markers) })
+            .then(e => {
+                if (e.ok) {
+                    return e.json()
+                } else {
+                    this.props.logOut();
+                }
+            })
+            .then(async user => {
+                this.props.forceUpdateApp();
+                await this.getAllMarkersTEST(lat, lng);
+            })
     }
 
     removeMarker = () => {
@@ -108,13 +153,15 @@ class MainPageLogged extends Component {
     }
 
     handleMarkerMapActiveItem = (e) => {
-        const items = document.querySelectorAll('.marker__item');
-        if (items !== null) {
+        const items = document.querySelectorAll('.marker__item') ? Array.from(document.querySelectorAll('.marker__item')) : null;
+        const markerMap = e.target;
+        console.log(e.target.options);
+        if (items !== null && items !== undefined) {
             items.forEach(e => {
                 e.classList.remove('marker__item--active');
             });
-            document.querySelector(`[data-markerid='${e.target.options.id}'`).classList.add('marker__item--active');
-            this.handleMarkerClick(e)
+            console.log(e.target.options.id)
+            document.querySelector(`li[data-markerid="${markerMap.options.id}"]`).classList.add('marker__item--active');
         }
     }
 

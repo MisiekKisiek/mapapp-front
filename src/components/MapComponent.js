@@ -18,15 +18,21 @@ const MapComponent = ({ curLat, curLng, curZoom, handleZoom, handleSetCenter, ha
                 position={[lat, lng]}
                 icon={icon}
                 draggable={true}
-                onmouseup={e => {
-                    handleSetCenter(e.latlng.lat, e.latlng.lng);
-                    editMarker(e)
+                ondragend={async e => {
+                    await editMarker(e);
+                    handleMarkerMapActiveItem(e);
                 }}
                 onclick={(e) => {
-                    handleMarkerMapActiveItem(e)
+                    handleMarkerMapActiveItem(e);
                 }}
             >
-                <Popup >{e.descripion} Miejsce sobie</Popup>
+                <Popup closeOnClick={false} >
+                    <div className="map__popup">
+                        <span className="map__popup-name">{name}</span>
+                        <span className="map__popup-place">{place}</span>
+                        <span className="map__popup-description">{description}</span>
+                    </div>
+                </Popup>
             </Marker>)
         });
         return markers

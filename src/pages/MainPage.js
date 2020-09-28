@@ -34,7 +34,7 @@ class MainPage extends Component {
             </HeaderLogged>);
         const renderLoggedPage = sessionStorage.getItem('logged') === 'unlogged' ?
             (<MainPageUnlogged></MainPageUnlogged>) :
-            (<MainPageLogged logOut={this.props.logOut} ></MainPageLogged>);
+            (<MainPageLogged logOut={this.props.logOut} forceUpdateApp={this.props.forceUpdateApp}></MainPageLogged>);
         const renderLoginComponent = sessionStorage.getItem('logged') === 'unlogged' ?
             (<LoginComponent forceUpdateApp={this.props.forceUpdateApp}></LoginComponent>) :
             (<Redirect to='/'></Redirect>);

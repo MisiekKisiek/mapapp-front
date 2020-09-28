@@ -5,7 +5,7 @@ const HeaderLogged = ({ logOut, handleShowMarkerList }) => {
 
     return (
         <>
-            <nav className="header-logged">
+            <header className="header-logged">
                 <ul className="header-logged__wrap">
                     <li className="header-logged__item">
                         <button className="header-logged__marker-drop active" onClick={(e) => {
@@ -27,7 +27,7 @@ const HeaderLogged = ({ logOut, handleShowMarkerList }) => {
                         }}>Log out</button>
                     </li>
                 </ul>
-            </nav>
+            </header>
         </>
     );
 }

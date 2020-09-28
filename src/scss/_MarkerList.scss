@@ -67,6 +67,7 @@
                     }
                 }
                 .marker__item-section{
+                    @include flex-mother($flex-direction: column);
                     position: absolute;
                     top: 0;
                     left: 0;
@@ -76,8 +77,20 @@
                     background-color: rgb(82, 114, 209);
                     box-shadow: 0 0 10px 2px inset rgb(164, 176, 209);
                     color: #fff;
-                    .marker__place{};
-                    .marker__description{}
+                    .marker__place{
+                        font-size: 11px;
+                        span{
+                            font-weight: bold;
+                        }
+                    };
+                    .marker__description{
+                        flex-grow: 1;
+                        // border: 1px solid black;
+                        // border-radius: 5px;
+                        border-top: 1px solid rgba(164, 176, 209, 0.4);
+                        // background-color: rgba(164, 176, 209, 0.4);
+                        font-size: 12px;
+                    }
                 }
                 &--active{
                     height: 160px;

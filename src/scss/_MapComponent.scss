@@ -1,4 +1,5 @@
 @import './Variables';
+@import './Mixins';
 
 .map{
     img.leaflet-marker-icon{
@@ -18,6 +19,17 @@
     .leaflet-top{
         top:auto;
         bottom: 0;
+    }
+    .leaflet-popup-content{
+        .map__popup{
+            @include flex-mother($flex-direction: column);
+            max-width: 200px;
+            .map__popup-name{
+                font-weight: bold;
+            };
+            .map__popup-place{};
+            .map__popup-description{};
+        }
     }
 
 }

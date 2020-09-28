@@ -52,6 +52,19 @@
   }
 }
 
+@mixin arrow-item($size:40px){
+  content:"";
+  display:block;
+  position: absolute;
+  top: 90%;
+  left:-20%;
+  width: calc(#{$size} / 3);
+  height: calc(#{$size} / 3);
+  background-color: royalblue;
+  border-radius: 50%;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
 @mixin arrow($top: 0, $left:0, $right:auto, $rotate: -135deg, $size: 40px){
   position: absolute;
   top: $top;
@@ -67,28 +80,10 @@
     animation: 6s arrow-bounce linear infinite;
   }
   &:before{
-    content:"";
-    display:block;
-    position: absolute;
-    top: -15%;
-    left:-10%;
-    width: calc(#{$size} / 3.9);
-    height: calc(#{$size} / 3.9);
-    background-color: royalblue;
-    border-radius: 50%;
-    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    @include arrow-item($size)
   }
   &:after{
-    content:"";
-    display:block;
-    position: absolute;
-    top: 90%;
-    left:-20%;
-    width: calc(#{$size} / 3);
-    height: calc(#{$size} / 3);
-    background-color: royalblue;
-    border-radius: 50%;
-    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    @include arrow-item($size)
   }
   
 }
@@ -148,8 +143,6 @@
   cursor: pointer;
   transition: .3s;
   z-index: 1;
-  *{
-  }
   &:before{
     position: absolute;
     top:0;
