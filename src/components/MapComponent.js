@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import { icon } from '../tools/iconMarker'
 import { connect } from 'react-redux';
 
 
-const MapComponent = ({ curLat, curLng, curZoom, handleZoom, handleSetCenter, handleMarkerMapActiveItem, markersAll, editMarker }) => {
+const MapComponent = ({ curLat, curLng, curZoom, handleZoom, handleSetCenter, handleMarkerMapActiveItem, handleAddMarkerPosition, markersAll, editMarker }) => {
+
+    const [addMarkerPosition, setaddMarkerPosition] = useState({ lat: null, lng: null });
 
     const renderAllMarkers = () => {
         const markers = markersAll.map((e, index) => {
@@ -17,7 +19,7 @@ const MapComponent = ({ curLat, curLng, curZoom, handleZoom, handleSetCenter, ha
                 description={description}
                 position={[lat, lng]}
                 icon={icon}
-                draggable={true}
+                // draggable={true}
                 ondragend={async e => {
                     await editMarker(e);
                     handleMarkerMapActiveItem(e);
@@ -39,7 +41,14 @@ const MapComponent = ({ curLat, curLng, curZoom, handleZoom, handleSetCenter, ha
     }
 
     return (<>
-        <Map className="map" center={[curLat, curLng]} zoom={curZoom} onzoomend={handleZoom} onzoomlevelschange={handleZoom} ondragend={(e) => { handleSetCenter(e.target.getCenter().lat, e.target.getCenter().lng) }}>
+        <Map className="map" center={[curLat, curLng]} zoom={curZoom} onzoomend={handleZoom} onzoomlevelschange={handleZoom} ondragend={(e) => { handleSetCenter(e.target.getCenter().lat, e.target.getCenter().lng) }} oncontextmenu={e => {
+            const { lat, lng } = e.latlng;
+            handleAddMarkerPosition(lat, lng)
+            document.querySelector('.context-menu').style.top = `${e.originalEvent.clientY}px`;
+            document.querySelector('.context-menu').style.left = `${e.originalEvent.clientX}px`;
+            document.querySelector('.context-menu').style.display = 'block';
+        }}
+        >
             <TileLayer
                 attribution={'&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
                 url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}

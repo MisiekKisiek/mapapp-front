@@ -38,6 +38,11 @@ class App extends Component {
       sessionStorage.setItem('user', "");
       sessionStorage.setItem('email', "");
     }
+    document.addEventListener('click', () => {
+      if (document.querySelector('.context-menu')) {
+        document.querySelector('.context-menu').style.display = 'none';
+      }
+    })
   }
 
   render() {

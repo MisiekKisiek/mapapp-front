@@ -8,6 +8,7 @@ import { getMarkers } from '../actions/markers.action';
 import Header from './HeaderLogged';
 import MapComponent from './MapComponent';
 import MarkerList from './MarkerList';
+import ContextMenu from './ContextMenu';
 
 //Tools
 import { API } from '../tools/apiPrefixes';
@@ -18,7 +19,9 @@ class MainPageLogged extends Component {
         this.state = {
             curLat: 52,
             curLng: 21,
-            curZoom: 10
+            curZoom: 10,
+            addMarkerLat: null,
+            addMarkerLng: null
         }
     }
 
@@ -113,6 +116,13 @@ class MainPageLogged extends Component {
 
     }
 
+    handleAddMarkerPosition = (lat, lng) => {
+        this.setState({
+            addMarkerLat: lat,
+            addMarkerLng: lng
+        })
+    }
+
     handleSetCenter = (lat, lng) => {
         this.setState({ curLat: lat, curLng: lng });
     }
@@ -155,13 +165,14 @@ class MainPageLogged extends Component {
     handleMarkerMapActiveItem = (e) => {
         const items = document.querySelectorAll('.marker__item') ? Array.from(document.querySelectorAll('.marker__item')) : null;
         const markerMap = e.target;
-        console.log(e.target.options);
+        this.handleSetCenter(markerMap._latlng.lat, markerMap._latlng.lng);
         if (items !== null && items !== undefined) {
             items.forEach(e => {
                 e.classList.remove('marker__item--active');
             });
-            console.log(e.target.options.id)
-            document.querySelector(`li[data-markerid="${markerMap.options.id}"]`).classList.add('marker__item--active');
+            if (document.querySelector(`li[data-markerid="${markerMap.options.id}"]`)) {
+                document.querySelector(`li[data-markerid="${markerMap.options.id}"]`).classList.add('marker__item--active');
+            }
         }
     }
 
@@ -180,9 +191,11 @@ class MainPageLogged extends Component {
                     handleSetCenter={this.handleSetCenter}
                     handleMarkerMapActiveItem={this.handleMarkerMapActiveItem}
                     editMarker={this.editMarker}
+                    handleAddMarkerPosition={this.handleAddMarkerPosition}
                 >
                 </MapComponent>
                 <MarkerList handleMarkerListActiveItem={this.handleMarkerListActiveItem}></MarkerList>
+                <ContextMenu />
             </main>
         </>);
     }
