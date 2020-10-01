@@ -11,39 +11,40 @@ const MapComponent = ({ curLat, curLng, curZoom, handleZoom, handleSetCenter, ha
     const renderAllMarkers = () => {
         const markers = markersAll.map((e, index) => {
             const { _id, name, place, description, lat, lng } = e;
-            return (<Marker
-                key={_id}
-                id={_id}
-                name={name}
-                place={place}
-                description={description}
-                position={[lat, lng]}
-                icon={icon}
-                // draggable={true}
-                ondragend={async e => {
-                    await editMarker(e);
-                    handleMarkerMapActiveItem(e);
-                }}
-                onclick={(e) => {
-                    handleMarkerMapActiveItem(e);
-                }}
-            >
-                <Popup closeOnClick={false} >
-                    <div className="map__popup">
-                        <span className="map__popup-name">{name}</span>
-                        <span className="map__popup-place">{place}</span>
-                        <span className="map__popup-description">{description}</span>
-                    </div>
-                </Popup>
-            </Marker>)
+            return (
+                <Marker
+                    key={_id}
+                    id={_id}
+                    name={name}
+                    place={place}
+                    description={description}
+                    position={[lat, lng]}
+                    icon={icon}
+                    // draggable={true}
+                    ondragend={async e => {
+                        await editMarker(e);
+                        handleMarkerMapActiveItem(e);
+                    }}
+                    onclick={(e) => {
+                        handleMarkerMapActiveItem(e);
+                    }}
+                >
+                    <Popup closeOnClick={true} >
+                        <div className="map__popup">
+                            <span className="map__popup-name">{name}</span>
+                            <span className="map__popup-place">{place}</span>
+                            <span className="map__popup-description">{description}</span>
+                        </div>
+                    </Popup>
+                </Marker>)
         });
         return markers
     }
 
     return (<>
-        <Map className="map" center={[curLat, curLng]} zoom={curZoom} onzoomend={handleZoom} onzoomlevelschange={handleZoom} ondragend={(e) => { handleSetCenter(e.target.getCenter().lat, e.target.getCenter().lng) }} oncontextmenu={e => {
+        <Map className="map" center={[curLat, curLng]} zoom={curZoom} onzoomend={handleZoom} onzoomlevelschange={handleZoom} ondragend={(e) => { handleSetCenter(e.target.getCenter().lat, e.target.getCenter().lng) }} oncontextmenu={async e => {
             const { lat, lng } = e.latlng;
-            handleAddMarkerPosition(lat, lng)
+            await handleAddMarkerPosition(lat, lng)
             document.querySelector('.context-menu').style.top = `${e.originalEvent.clientY}px`;
             document.querySelector('.context-menu').style.left = `${e.originalEvent.clientX}px`;
             document.querySelector('.context-menu').style.display = 'block';

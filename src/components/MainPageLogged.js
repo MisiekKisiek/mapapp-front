@@ -9,6 +9,7 @@ import Header from './HeaderLogged';
 import MapComponent from './MapComponent';
 import MarkerList from './MarkerList';
 import ContextMenu from './ContextMenu';
+import AddMarker from './AddMarker';
 
 //Tools
 import { API } from '../tools/apiPrefixes';
@@ -25,46 +26,8 @@ class MainPageLogged extends Component {
         }
     }
 
-    getMarkersAndUpdateCurrentZoom = async (user, lat, lng) => {
-        if (this.props.markersAll[0]) {
-            await this.props.getMarkers(user.markers);
-            if (lat && lng) {
-                this.setState({
-                    curLat: lat,
-                    curLng: lng,
-                })
-                return
-            }
-            this.setState({
-                curLat: this.props.markersAll[0].lat,
-                curLng: this.props.markersAll[0].lng,
-            })
-        }
-    }
 
     getAllMarkers = async (lat, lng) => {
-        await fetch(`${API}/getAllMarkers`, {
-            headers: {
-                Authorization: `bearer ${sessionStorage.getItem("token")}`
-            }
-        })
-            .then(e => {
-                if (e.ok) {
-                    return e.json()
-                } else {
-                    this.props.logOut();
-                    throw Error("You have been logged out")
-                }
-            })
-            .then(async (markers) => {
-                if (sessionStorage.getItem('logged') === "logged") {
-                    await this.props.getMarkers(markers.markers);
-                    this.getMarkersAndUpdateCurrentZoom(markers, lat, lng)
-                }
-            }
-            ).catch(err => { console.log(err) })
-    }
-    getAllMarkersTEST = async (lat, lng) => {
         await fetch(`${API}/getAllMarkers`, {
             headers: {
                 Authorization: `bearer ${sessionStorage.getItem("token")}`
@@ -85,6 +48,20 @@ class MainPageLogged extends Component {
                 }
             }
             ).catch(err => { console.log(err) })
+    }
+
+    addMarker = (e, lat, lng, name, place, description) => {
+        fetch(`${API}/addMarker`, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `bearer ${sessionStorage.getItem("token")}`
+            },
+            body: JSON.stringify({ lat, lng, name, place, description })
+        }).then(e => e.json()).then(e => {
+            this.getAllMarkers(lat, lng);
+        })
     }
 
     editMarker = async (e) => {
@@ -108,12 +85,29 @@ class MainPageLogged extends Component {
             })
             .then(async user => {
                 this.props.forceUpdateApp();
-                await this.getAllMarkersTEST(lat, lng);
+                await this.getAllMarkers(lat, lng);
             })
     }
 
     removeMarker = () => {
 
+    }
+
+    getMarkersAndUpdateCurrentZoom = async (user, lat, lng) => {
+        if (this.props.markersAll[0]) {
+            await this.props.getMarkers(user.markers);
+            if (lat && lng) {
+                this.setState({
+                    curLat: lat,
+                    curLng: lng,
+                })
+                return
+            }
+            this.setState({
+                curLat: this.props.markersAll[0].lat,
+                curLng: this.props.markersAll[0].lng,
+            })
+        }
     }
 
     handleAddMarkerPosition = (lat, lng) => {
@@ -176,6 +170,15 @@ class MainPageLogged extends Component {
         }
     }
 
+    handleAddMarkerElementVisible = (type) => {
+        const addMarkerElement = document.querySelector('.add-marker');
+        if (type === "context" && !Array.from(addMarkerElement).includes('add-marker--active')) {
+            addMarkerElement.classList.add('add-marker--active')
+        } else if (type === "submit" && !Array.from(addMarkerElement).includes('add-marker--active')) {
+            addMarkerElement.classList.remove('add-marker--active')
+        }
+    }
+
     componentDidMount() {
         this.getAllMarkers();
     }
@@ -192,10 +195,17 @@ class MainPageLogged extends Component {
                     handleMarkerMapActiveItem={this.handleMarkerMapActiveItem}
                     editMarker={this.editMarker}
                     handleAddMarkerPosition={this.handleAddMarkerPosition}
-                >
-                </MapComponent>
-                <MarkerList handleMarkerListActiveItem={this.handleMarkerListActiveItem}></MarkerList>
-                <ContextMenu />
+                />
+                <MarkerList handleMarkerListActiveItem={this.handleMarkerListActiveItem} />
+                <ContextMenu handleAddMarkerElementVisible={this.handleAddMarkerElementVisible} />
+                <AddMarker
+                    addMarker={this.addMarker}
+                    getAllMarkers={this.getAllMarkers}
+                    lat={this.state.addMarkerLat}
+                    lng={this.state.addMarkerLng}
+                    handleAddMarkerElementVisible={this.handleAddMarkerElementVisible}
+                    getMarkersAndUpdateCurrentZoom={this.getMarkersAndUpdateCurrentZoom}
+                />
             </main>
         </>);
     }
