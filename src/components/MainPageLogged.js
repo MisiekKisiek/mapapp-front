@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { getMarkers } from '../actions/markers.action';
 
 //Components
-import Header from './HeaderLogged';
 import MapComponent from './MapComponent';
 import MarkerList from './MarkerList';
 import ContextMenu from './ContextMenu';
@@ -50,8 +49,8 @@ class MainPageLogged extends Component {
             ).catch(err => { console.log(err) })
     }
 
-    addMarker = (e, lat, lng, name, place, description) => {
-        fetch(`${API}/addMarker`, {
+    addMarker = async (e, lat, lng, name, place, description) => {
+        await fetch(`${API}/addMarker`, {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -89,8 +88,17 @@ class MainPageLogged extends Component {
             })
     }
 
-    removeMarker = () => {
-
+    removeMarker = async (id) => {
+        await fetch(`${API}/removeMarker`, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `bearer ${sessionStorage.getItem("token")}`
+            },
+            body: JSON.stringify(id)
+        })
+            .then(e => e.json())
+            .then(e => { console.log(e) })
     }
 
     getMarkersAndUpdateCurrentZoom = async (user, lat, lng) => {
@@ -196,7 +204,10 @@ class MainPageLogged extends Component {
                     editMarker={this.editMarker}
                     handleAddMarkerPosition={this.handleAddMarkerPosition}
                 />
-                <MarkerList handleMarkerListActiveItem={this.handleMarkerListActiveItem} />
+                <MarkerList
+                    handleMarkerListActiveItem={this.handleMarkerListActiveItem}
+                    removeMarker={this.removeMarker}
+                />
                 <ContextMenu handleAddMarkerElementVisible={this.handleAddMarkerElementVisible} />
                 <AddMarker
                     addMarker={this.addMarker}

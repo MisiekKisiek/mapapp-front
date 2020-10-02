@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 //Styles
@@ -7,6 +7,7 @@ import './scss/Main.scss'
 //Components
 import MainPage from './pages/MainPage'
 import Footer from './components/Footer'
+import AlertComponent from './components/AlertComponent';
 
 class App extends Component {
   constructor() {
@@ -14,7 +15,8 @@ class App extends Component {
     this.state = {
       logged: sessionStorage.getItem('logged')
     }
-    this.forceUpdateApp = this.forceUpdateApp.bind(this)
+    this.forceUpdateApp = this.forceUpdateApp.bind(this);
+    this.alert = createRef();
   }
 
   forceUpdateApp() {
@@ -45,12 +47,23 @@ class App extends Component {
     })
   }
 
+  handleAlerts = (alert) => {
+    this.alert.current.textContent = alert ? alert : "";
+    this.alert.current.classList.toggle('alert--active');
+  }
+
   render() {
     return (
       <Router>
         <div className="App">
-          <MainPage logged={this.state.logged} logOut={this.logOut} logIn={this.logIn} forceUpdateApp={this.forceUpdateApp}></MainPage>
-          <Footer></Footer>
+          <MainPage
+            logged={this.state.logged}
+            logOut={this.logOut}
+            logIn={this.logIn}
+            forceUpdateApp={this.forceUpdateApp}
+          />
+          <Footer />
+          <AlertComponent ref={this.alert} />
         </div>
       </Router>);
   }

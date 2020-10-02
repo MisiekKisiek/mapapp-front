@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Marker from './MarkerListItem';
 
 
-const MarkerList = ({ markersAll, handleMarkerListActiveItem }) => {
+const MarkerList = ({ markersAll, handleMarkerListActiveItem, removeMarker }) => {
 
     const renderMarkerItems = () => {
         const markers = markersAll.map((e, index) =>
@@ -14,6 +14,7 @@ const MarkerList = ({ markersAll, handleMarkerListActiveItem }) => {
                 id={e._id}
                 marker={e}
                 handleMarkerListActiveItem={handleMarkerListActiveItem}
+                removeMarker={removeMarker}
                 first={index === 0 ? true : false}
             >
             </Marker>);
