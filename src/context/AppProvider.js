@@ -23,12 +23,31 @@ class AppProvider extends Component {
     }
   };
 
+  handleSetCurrentZoom = (lat, lng, zoom) => {
+    this.setState({
+      curLat: lat,
+      curLng: lng,
+      curZoom: zoom,
+    })
+  }
+
+  handleAddMarkerPosition = (lat, lng) => {
+    this.setState({
+      addMarkerLat: lat,
+      addMarkerLng: lng,
+    });
+  };
+
   render() {
     return (
       <AppContext.Provider
         value={{
           addMarkerComponentVisibility: this.state.addMarkerComponentVisibility,
           handleAddMarkerElementVisible: this.handleAddMarkerElementVisible,
+          handleSetCurrentZoom: this.handleSetCurrentZoom,
+          // addMarkerLat: this.addMarkerLat,
+          // addMarkerLng: this.addMarkerLng,
+          // handleAddMarkerPosition: this.handleAddMarkerPosition,
         }}
       >
         {this.props.children}

@@ -46,7 +46,7 @@ class MainPageLogged extends Component {
       .then(async (markers) => {
         if (sessionStorage.getItem("logged") === "logged") {
           await this.props.getMarkers(markers.markers);
-          this.getMarkersAndUpdateCurrentZoom(markers, lat, lng);
+          this.updateMarkersStateAndCurrentZoom(markers, lat, lng);
         }
       })
       .catch((err) => {
@@ -105,11 +105,12 @@ class MainPageLogged extends Component {
   removeMarker = async (id) => {
     await fetch(`${API}/removeMarker`, {
       method: "DELETE",
+      mode: 'cors',
       headers: {
         "Content-Type": "application/json",
         Authorization: `bearer ${sessionStorage.getItem("token")}`,
       },
-      body: JSON.stringify(id),
+      body: JSON.stringify({ id }),
     })
       .then((e) => e.json())
       .then((e) => {
@@ -117,7 +118,7 @@ class MainPageLogged extends Component {
       });
   };
 
-  getMarkersAndUpdateCurrentZoom = async (user, lat, lng) => {
+  updateMarkersStateAndCurrentZoom = async (user, lat, lng) => {
     if (this.props.markersAll[0]) {
       await this.props.getMarkers(user.markers);
       if (lat && lng) {
