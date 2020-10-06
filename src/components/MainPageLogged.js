@@ -19,15 +19,10 @@ import AppContext from "../context/AppContext";
 class MainPageLogged extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      curLat: 52,
-      curLng: 21,
-      curZoom: 10,
-      addMarkerLat: null,
-      addMarkerLng: null,
-      addMarkerComponentVisibility: false,
-    };
+    this.state = {};
   }
+
+  static contextType = AppContext;
 
   getAllMarkers = async (lat, lng) => {
     await fetch(`${API}/getAllMarkers`, {
@@ -105,7 +100,7 @@ class MainPageLogged extends Component {
   removeMarker = async (id) => {
     await fetch(`${API}/removeMarker`, {
       method: "DELETE",
-      mode: 'cors',
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         Authorization: `bearer ${sessionStorage.getItem("token")}`,
@@ -114,7 +109,7 @@ class MainPageLogged extends Component {
     })
       .then((e) => e.json())
       .then((e) => {
-        console.log(e);
+        this.getAllMarkers();
       });
   };
 
@@ -122,32 +117,14 @@ class MainPageLogged extends Component {
     if (this.props.markersAll[0]) {
       await this.props.getMarkers(user.markers);
       if (lat && lng) {
-        this.setState({
-          curLat: lat,
-          curLng: lng,
-        });
+        this.context.handleSetCenter(lat, lng);
         return;
       }
-      this.setState({
-        curLat: this.props.markersAll[0].lat,
-        curLng: this.props.markersAll[0].lng,
-      });
+      this.context.handleSetCenter(
+        this.props.markersAll[0].lat,
+        this.props.markersAll[0].lng
+      );
     }
-  };
-
-  handleAddMarkerPosition = (lat, lng) => {
-    this.setState({
-      addMarkerLat: lat,
-      addMarkerLng: lng,
-    });
-  };
-
-  handleSetCenter = (lat, lng) => {
-    this.setState({ curLat: lat, curLng: lng });
-  };
-
-  handleZoom = (e) => {
-    this.setState({ curZoom: e.target._animateToZoom });
   };
 
   handleMarkerListActiveItem = async (e) => {
@@ -158,15 +135,15 @@ class MainPageLogged extends Component {
     }
     const lat = markersAll[markersAll.findIndex(findMarkerId)]
       ? markersAll[markersAll.findIndex(findMarkerId)].lat
-      : this.state.curLat;
+      : this.context.curLat;
     const lng = markersAll[markersAll.findIndex(findMarkerId)]
       ? markersAll[markersAll.findIndex(findMarkerId)].lng
-      : this.state.curLng;
+      : this.context.curLng;
     if (Array.from(element.classList).includes("marker__item-title")) {
-      this.setState({ curLat: lat, curLng: lng });
+      this.context.handleSetCenter(lat, lng);
     }
     if (
-      (lat === this.state.curLat && lng === this.state.curLng) ||
+      (lat === this.context.curLat && lng === this.context.curLng) ||
       !Array.from(element.parentElement.classList).includes(
         "marker__item--active"
       )
@@ -220,15 +197,25 @@ class MainPageLogged extends Component {
       <>
         <AppContext.Consumer>
           {(props) => {
-            const addMarkerToggle = props.addMarkerComponentVisibility ? (
+            const {
+              addMarkerComponentVisibility,
+              handleAddMarkerElementVisible,
+              addMarkerLat,
+              addMarkerLng,
+              handleAddMarkerPosition,
+              curLat,
+              curLng,
+              curZoom,
+              handleSetCenter,
+            } = props;
+
+            const addMarkerToggle = addMarkerComponentVisibility ? (
               <AddMarker
                 addMarker={this.addMarker}
                 getAllMarkers={this.getAllMarkers}
-                lat={this.state.addMarkerLat}
-                lng={this.state.addMarkerLng}
-                handleAddMarkerElementVisible={
-                  props.handleAddMarkerElementVisible
-                }
+                lat={addMarkerLat ? addMarkerLat : 52}
+                lng={addMarkerLng ? addMarkerLng : 21}
+                handleAddMarkerElementVisible={handleAddMarkerElementVisible}
                 getMarkersAndUpdateCurrentZoom={
                   this.getMarkersAndUpdateCurrentZoom
                 }
@@ -237,23 +224,20 @@ class MainPageLogged extends Component {
             return (
               <main className="logged__wrap">
                 <MapComponent
-                  curLat={this.state.curLat}
-                  curLng={this.state.curLng}
-                  curZoom={this.state.curZoom}
-                  handleZoom={this.handleZoom}
-                  handleSetCenter={this.handleSetCenter}
-                  handleMarkerMapActiveItem={this.handleMarkerMapActiveItem}
                   editMarker={this.editMarker}
-                  handleAddMarkerPosition={this.handleAddMarkerPosition}
+                  curLat={curLat}
+                  curLng={curLng}
+                  curZoom={curZoom}
+                  handleSetCenter={handleSetCenter}
+                  handleMarkerMapActiveItem={this.handleMarkerMapActiveItem}
+                  handleAddMarkerPosition={handleAddMarkerPosition}
                 />
                 <MarkerList
-                  handleMarkerListActiveItem={this.handleMarkerListActiveItem}
                   removeMarker={this.removeMarker}
+                  handleMarkerListActiveItem={this.handleMarkerListActiveItem}
                 />
                 <ContextMenu
-                  handleAddMarkerElementVisible={
-                    props.handleAddMarkerElementVisible
-                  }
+                  handleAddMarkerElementVisible={handleAddMarkerElementVisible}
                 />
                 {addMarkerToggle}
               </main>

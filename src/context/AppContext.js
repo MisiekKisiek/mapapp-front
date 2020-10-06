@@ -2,16 +2,16 @@ import React, { createContext } from "react";
 
 const defaultValue = {
   addMarkerComponentVisibility: false,
-  handleAddMarkerElementVisible: () => { },
-  addMarkerLat: null,
-  addMarkerLng: null,
-  handleAddMarkerPosition: () => { },
+  handleAddMarkerElementVisible: () => {},
+  addMarkerLat: 51,
+  addMarkerLng: 22,
+  handleAddMarkerPosition: () => {},
   curLat: 52,
   curLng: 21,
   curZoom: 12,
-  handleSetCurrentZoom: () => { },
+  handleSetCenter: () => {},
   activeMarker: null,
-  handleActiveMarker: () => { },
+  handleActiveMarker: () => {},
 };
 
 const AppContext = createContext(defaultValue);
