@@ -1,4 +1,4 @@
-export const getMarkers = (markers) => ({
-    type: 'GET_MARKERS',
-    markers
-})
+export const setMarkers = (markers) => ({
+  type: "SET_MARKERS",
+  markers,
+});

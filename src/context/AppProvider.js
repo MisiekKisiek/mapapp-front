@@ -9,14 +9,14 @@ class AppProvider extends Component {
   handleAddMarkerElementVisible = (type) => {
     switch (type) {
       case "context":
-        this.setState((prevState) => ({
+        this.setState({
           addMarkerComponentVisibility: true,
-        }));
+        });
         break;
       case "submit":
-        this.setState((prevState) => ({
+        this.setState({
           addMarkerComponentVisibility: false,
-        }));
+        });
         break;
       default:
         break;
@@ -39,10 +39,37 @@ class AppProvider extends Component {
   };
 
   handleSetCenter = (lat, lng, zoom) => {
+    if (lat && lng) {
+      if (zoom) {
+        this.setState({
+          curLat: lat,
+          curLng: lng,
+          curZoom: zoom,
+        });
+      } else {
+        this.setState({
+          curLat: lat,
+          curLng: lng,
+        });
+      }
+    }
+  };
+
+  handleActiveMarker = (id) => {
     this.setState({
-      curLat: lat,
-      curLng: lng,
-      curZoom: zoom,
+      activeMarker: id,
+    });
+  };
+
+  handleShowMarkerList = () => {
+    this.setState((prevState) => ({
+      showMarkerList: !prevState.showMarkerList,
+    }));
+  };
+
+  handleFilterMarkers = (value) => {
+    this.setState({
+      filterMarkers: value,
     });
   };
 
@@ -60,6 +87,12 @@ class AppProvider extends Component {
           curLng: this.state.curLng,
           curZoom: this.state.curZoom,
           handleSetCenter: this.handleSetCenter,
+          activeMarker: this.state.activeMarker,
+          handleActiveMarker: this.handleActiveMarker,
+          showMarkerList: this.state.showMarkerList,
+          handleShowMarkerList: this.handleShowMarkerList,
+          filterMarkers: this.state.filterMarkers,
+          handleFilterMarkers: this.handleFilterMarkers,
         }}
       >
         {this.props.children}

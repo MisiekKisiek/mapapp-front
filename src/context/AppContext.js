@@ -12,6 +12,10 @@ const defaultValue = {
   handleSetCenter: () => {},
   activeMarker: null,
   handleActiveMarker: () => {},
+  showMarkerList: true,
+  handleShowMarkerList: () => {},
+  filterMarkers: "",
+  handleFilterMarkers: () => {},
 };
 
 const AppContext = createContext(defaultValue);

@@ -1,9 +1,11 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import { icon } from "../tools/iconMarker";
 import { connect } from "react-redux";
 
 const MapComponent = ({
+  handleMarkerMapActiveItemTEST,
+  activeMarker,
   curLat,
   curLng,
   curZoom,
@@ -12,48 +14,51 @@ const MapComponent = ({
   handleAddMarkerPosition,
   markersAll,
   editMarker,
+  filterMarkers,
 }) => {
-  const [addMarkerPosition, setaddMarkerPosition] = useState({
-    lat: null,
-    lng: null,
-  });
-
   const handleZoom = (e) => {
     handleSetCenter(curLat, curLng, e.target._animateToZoom);
   };
 
-  const renderAllMarkers = () => {
-    const markers = markersAll.map((e, index) => {
-      const { _id, name, place, description, lat, lng } = e;
+  const renderAllMarkers = (_markers, filter) => {
+    const markers = _markers
+      .filter((e) =>
+        `${e.name}${e.place}${e.description}`
+          .toLowerCase()
+          .includes(filter.toLowerCase())
+      )
+      .map((e, index) => {
+        const { _id, name, place, description, lat, lng } = e;
 
-      return lat && lng ? (
-        <Marker
-          key={_id}
-          id={_id}
-          name={name}
-          place={place}
-          description={description}
-          position={[lat, lng]}
-          icon={icon}
-          // draggable={true}
-          ondragend={async (e) => {
-            await editMarker(e);
-            handleMarkerMapActiveItem(e);
-          }}
-          onclick={(e) => {
-            handleMarkerMapActiveItem(e);
-          }}
-        >
-          <Popup closeOnClick={true}>
-            <div className="map__popup">
-              <span className="map__popup-name">{name}</span>
-              <span className="map__popup-place">{place}</span>
-              <span className="map__popup-description">{description}</span>
-            </div>
-          </Popup>
-        </Marker>
-      ) : null;
-    });
+        return lat && lng ? (
+          <Marker
+            key={_id}
+            id={_id}
+            name={name}
+            place={place}
+            description={description}
+            position={[lat, lng]}
+            icon={icon}
+            // draggable={true}
+            ondragend={async (e) => {
+              await editMarker(e);
+              handleMarkerMapActiveItem(e);
+            }}
+            onclick={(e) => {
+              // handleMarkerMapActiveItem(e);
+              handleMarkerMapActiveItemTEST(e);
+            }}
+          >
+            <Popup closeOnClick={true}>
+              <div className="map__popup">
+                <span className="map__popup-name">{name}</span>
+                <span className="map__popup-place">{place}</span>
+                <span className="map__popup-description">{description}</span>
+              </div>
+            </Popup>
+          </Marker>
+        ) : null;
+      });
     return markers;
   };
 
@@ -86,7 +91,7 @@ const MapComponent = ({
           }
           url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
         />
-        {renderAllMarkers()}
+        {renderAllMarkers(markersAll, filterMarkers)}
       </Map>
     </>
   );
