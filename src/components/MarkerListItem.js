@@ -1,17 +1,18 @@
 import React from "react";
 
 const MarkerListItem = ({
-  handleMarkerMapActiveItemTEST,
+  handleMarkerActiveItem,
   activeMarker,
   removeMarker,
   marker,
   id,
 }) => {
-  const { lat, lng, name, place, description } = marker;
+  const { name, place, description } = marker;
 
   const removeMarkerFunc = (e) => {
     e.preventDefault();
     removeMarker(id);
+    console.log("remove:", id);
   };
 
   return (
@@ -25,7 +26,7 @@ const MarkerListItem = ({
           className="marker__item-title"
           data-markerid={id}
           onClick={(e) => {
-            handleMarkerMapActiveItemTEST(e);
+            handleMarkerActiveItem(e);
           }}
         >
           {name}

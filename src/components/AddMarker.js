@@ -1,18 +1,21 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import React, { useState, useContext } from "react";
 
-const AddMarker = ({
-  markersAll,
-  addMarker,
-  handleSetCenter,
-  lat,
-  lng,
-  handleAddMarkerElementVisible,
-  handleMarkerMapActiveItemTEST,
-}) => {
+//Context
+import AppContext from "../context/AppContext";
+
+const AddMarker = ({ addMarker }) => {
   const [name, setname] = useState("");
   const [place, setplace] = useState("");
   const [description, setdescription] = useState("");
+
+  const {
+    addMarkerLat,
+    addMarkerLng,
+    handleAddMarkerElementVisible,
+  } = useContext(AppContext);
+
+  const lat = addMarkerLat ? addMarkerLat : 52;
+  const lng = addMarkerLng ? addMarkerLng : 21;
 
   const handleInputs = (e) => {
     switch (e.target.id) {
@@ -48,8 +51,6 @@ const AddMarker = ({
     handleAddMarkerElementVisible("submit");
     clearInputHooks();
   };
-
-  console.log(markersAll);
 
   return (
     <>
@@ -105,10 +106,4 @@ const AddMarker = ({
   );
 };
 
-const MSTP = (state) => {
-  return {
-    markersAll: state.markers,
-  };
-};
-
-export default connect(MSTP)(AddMarker);
+export default AddMarker;

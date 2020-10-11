@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import { icon } from "../tools/iconMarker";
 import { connect } from "react-redux";
 
-const MapComponent = ({
-  handleMarkerMapActiveItemTEST,
-  activeMarker,
-  curLat,
-  curLng,
-  curZoom,
-  handleSetCenter,
-  handleMarkerMapActiveItem,
-  handleAddMarkerPosition,
-  markersAll,
-  editMarker,
-  filterMarkers,
-}) => {
+//Context
+import AppContext from "../context/AppContext";
+
+const MapComponent = ({ handleMarkerActiveItem, markersAll, editMarker }) => {
+  const {
+    curLat,
+    curLng,
+    curZoom,
+    handleSetCenter,
+    filterMarkers,
+    handleAddMarkerPosition,
+  } = useContext(AppContext);
+
   const handleZoom = (e) => {
     handleSetCenter(curLat, curLng, e.target._animateToZoom);
   };
@@ -27,7 +27,7 @@ const MapComponent = ({
           .toLowerCase()
           .includes(filter.toLowerCase())
       )
-      .map((e, index) => {
+      .map((e) => {
         const { _id, name, place, description, lat, lng } = e;
 
         return lat && lng ? (
@@ -42,11 +42,11 @@ const MapComponent = ({
             // draggable={true}
             ondragend={async (e) => {
               await editMarker(e);
-              handleMarkerMapActiveItem(e);
+              handleMarkerActiveItem(e);
             }}
             onclick={(e) => {
               // handleMarkerMapActiveItem(e);
-              handleMarkerMapActiveItemTEST(e);
+              handleMarkerActiveItem(e);
             }}
           >
             <Popup closeOnClick={true}>

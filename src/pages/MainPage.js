@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 //Components
@@ -9,34 +9,25 @@ import MainPageLogged from "../components/MainPageLogged";
 import LoginComponent from "../components/LoginComponent";
 import RegisterComponent from "../components/RegisterComponent";
 
-//Context
-import AppContext from "../context/AppContext";
-
-const MainPage = (props) => {
-  const { handleShowMarkerList, showMarkerList } = useContext(AppContext);
-
+const MainPage = ({ logIn, logOut, forceUpdateApp }) => {
   const renderHeaderComponent =
     sessionStorage.getItem("logged") === "unlogged" ? (
-      <HeaderUnlogged logIn={props.logIn}></HeaderUnlogged>
+      <HeaderUnlogged logIn={logIn}></HeaderUnlogged>
     ) : (
-      <HeaderLogged
-        logOut={props.logOut}
-        showMarkerList={showMarkerList}
-        handleShowMarkerList={handleShowMarkerList}
-      ></HeaderLogged>
+      <HeaderLogged logOut={logOut}></HeaderLogged>
     );
   const renderLoggedPage =
     sessionStorage.getItem("logged") === "unlogged" ? (
       <MainPageUnlogged></MainPageUnlogged>
     ) : (
       <MainPageLogged
-        logOut={props.logOut}
-        forceUpdateApp={props.forceUpdateApp}
+        logOut={logOut}
+        forceUpdateApp={forceUpdateApp}
       ></MainPageLogged>
     );
   const renderLoginComponent =
     sessionStorage.getItem("logged") === "unlogged" ? (
-      <LoginComponent forceUpdateApp={props.forceUpdateApp}></LoginComponent>
+      <LoginComponent forceUpdateApp={forceUpdateApp}></LoginComponent>
     ) : (
       <Redirect to="/"></Redirect>
     );

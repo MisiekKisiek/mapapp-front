@@ -1,98 +1,170 @@
-import React, { Component, useRef, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-
-//Components 
-import Header from './HeaderUnlogged';
+import React, { useRef, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 //Images
-import image1 from '../img/mainpageright1.jpg';
-import image2 from '../img/mainpageright2.jpg';
-import image3 from '../img/mainpageright3.jpg';
+import image1 from "../img/mainpageright1.jpg";
+import image2 from "../img/mainpageright2.jpg";
+import image3 from "../img/mainpageright3.jpg";
 
 //Tools
-import { ParticlesFunc } from '../tools/particles';
+import { ParticlesFunc } from "../tools/particles";
 
 const MainPageUnlogged = () => {
+  const curtain = useRef(null);
+  const imageRef3 = useRef(null);
+  const imageRef2 = useRef(null);
+  const imageRef1 = useRef(null);
 
-    const curtain = useRef(null);
-    const imageRef3 = useRef(null);
-    const imageRef2 = useRef(null);
-    const imageRef1 = useRef(null);
+  useEffect(() => {
+    ParticlesFunc();
+  }, []);
 
-    useEffect(() => {
-        ParticlesFunc()
-    }, []);
-
-    const handleGaleryActive = (e) => {
-        if (e.target.classList.contains('active')) {
-            imageRef1.current.classList.remove('active');
-            imageRef2.current.classList.remove('active');
-            imageRef3.current.classList.remove('active');
-            curtain.current.classList.toggle('unlogged__curtain--active')
-        } else {
-            e.target.classList.toggle('active');
-            curtain.current.classList.toggle('unlogged__curtain--active')
-        }
+  const handleGaleryActive = (e) => {
+    if (e.target.classList.contains("active")) {
+      imageRef1.current.classList.remove("active");
+      imageRef2.current.classList.remove("active");
+      imageRef3.current.classList.remove("active");
+      curtain.current.classList.toggle("unlogged__curtain--active");
+    } else {
+      e.target.classList.toggle("active");
+      curtain.current.classList.toggle("unlogged__curtain--active");
     }
+  };
 
-    const handleAboutSection = (e) => {
-        document.querySelector('.unlogged__about--active').classList.remove('unlogged__about--active');
-        e.target.parentNode.classList.add('unlogged__about--active');
-    }
+  const handleAboutSection = (e) => {
+    document
+      .querySelector(".unlogged__about--active")
+      .classList.remove("unlogged__about--active");
+    e.target.parentNode.classList.add("unlogged__about--active");
+  };
 
-    return (<>
-        <main className="unlogged__wrap">
-            <canvas className='canvas-particles' id="myCanvas" width='1424' height='1200'></canvas>
-            <div className="unlogged__curtain active" ref={curtain} onClick={(e) => { handleGaleryActive(e) }}></div>
-            <section className="unlogged__left-section">
-                <div className="unlogged_left-wrap">
-                    <div className="unlogged__about unlogged__about--active unlogged__about-1">
-                        <h2 onClick={(e) => { handleAboutSection(e) }}>Who we are?</h2>
-                        <p>We are highly motivated bunch of people, who want to create something that can break IT market. One idea, few specialist, lots of hours and a thousands lines of code. </p>
-                    </div>
-                    <div className="unlogged__about unlogged__about-2">
-                        <h2 onClick={(e) => { handleAboutSection(e) }}>What are we doing?</h2>
-                        <p>Right now we are mainly focus on Save The World project, that we believe in. We are almost sure, that this application can break the IT market! This project is written in JSES6 and HTML5 with CSS3 standards with REACT and REDUX technology on front-end and NODEJS on back-end.</p>
-                    </div>
-                    <div className="unlogged__about unlogged__about-3">
-                        <h2 onClick={(e) => { handleAboutSection(e) }}>About STW App!</h2>
-                        <p>STW (Save The World) is created to help You remember all places you have been. With markups and descriptions where You can write Your memories, this memories will be saved for eternity!</p>
-                    </div>
-                    <div className="unlogged__about unlogged__about-4">
-                        <h2 onClick={(e) => { handleAboutSection(e) }}>Stuff</h2>
-                        <p>The owner of STW (Save The World) app is MisiekKisiek company. If You have any sugestions or You want to work with us, send us a message on email adress: MiśkiKiśki@stw.com.</p>
-                    </div>
-                </div>
-            </section>
-            <section className="unlogged__mid-section">
-                <div className="unlogged__mid-wrap">
-                    <h1 className="unlogged__mid-title">Join and Save The World!</h1>
-                    <div className="unlogged__line-1">
-                        <NavLink to='/register' className="unlogged__register-button">Register</NavLink>
-                    </div>
-                    <div className="unlogged__line-2"></div>
-                    <div className="unlogged__line-3">
-                        <NavLink to="/login" className="unlogged__login-button">Login</NavLink>
-                    </div>
-                    <div className="unlogged__line-4"></div>
-                </div>
-            </section>
-            <section className="unlogged__right-section">
-                <div className="unlogged__img-wrap">
-                    <div className="unlogged__arrow-wrap">
-                        <div className="unlogged__arrow"></div>
-                    </div>
-                    <div className="unlogged__arrow-wrap">
-                        <div className="unlogged__arrow"></div>
-                    </div>
-                    <div className="unlogged__check">Check!</div>
-                    <img src={image3} alt='promo' ref={imageRef3} onClick={handleGaleryActive} />
-                    <img src={image2} alt='promo' ref={imageRef2} onClick={handleGaleryActive} />
-                    <img src={image1} alt='promo' ref={imageRef1} onClick={handleGaleryActive} />
-                </div>
-            </section>
-        </main>
-    </>);
-}
+  return (
+    <>
+      <main className="unlogged__wrap">
+        <canvas
+          className="canvas-particles"
+          id="myCanvas"
+          width="1424"
+          height="1200"
+        ></canvas>
+        <div
+          className="unlogged__curtain active"
+          ref={curtain}
+          onClick={(e) => {
+            handleGaleryActive(e);
+          }}
+        ></div>
+        <section className="unlogged__left-section">
+          <div className="unlogged_left-wrap">
+            <div className="unlogged__about unlogged__about--active unlogged__about-1">
+              <h2
+                onClick={(e) => {
+                  handleAboutSection(e);
+                }}
+              >
+                Who we are?
+              </h2>
+              <p>
+                We are highly motivated bunch of people, who want to create
+                something that can break IT market. One idea, few specialist,
+                lots of hours and a thousands lines of code.{" "}
+              </p>
+            </div>
+            <div className="unlogged__about unlogged__about-2">
+              <h2
+                onClick={(e) => {
+                  handleAboutSection(e);
+                }}
+              >
+                What are we doing?
+              </h2>
+              <p>
+                Right now we are mainly focus on Save The World project, that we
+                believe in. We are almost sure, that this application can break
+                the IT market! This project is written in JSES6 and HTML5 with
+                CSS3 standards with REACT and REDUX technology on front-end and
+                NODEJS on back-end.
+              </p>
+            </div>
+            <div className="unlogged__about unlogged__about-3">
+              <h2
+                onClick={(e) => {
+                  handleAboutSection(e);
+                }}
+              >
+                About STW App!
+              </h2>
+              <p>
+                STW (Save The World) is created to help You remember all places
+                you have been. With markups and descriptions where You can write
+                Your memories, this memories will be saved for eternity!
+              </p>
+            </div>
+            <div className="unlogged__about unlogged__about-4">
+              <h2
+                onClick={(e) => {
+                  handleAboutSection(e);
+                }}
+              >
+                Stuff
+              </h2>
+              <p>
+                The owner of STW (Save The World) app is MisiekKisiek company.
+                If You have any sugestions or You want to work with us, send us
+                a message on email adress: MiśkiKiśki@stw.com.
+              </p>
+            </div>
+          </div>
+        </section>
+        <section className="unlogged__mid-section">
+          <div className="unlogged__mid-wrap">
+            <h1 className="unlogged__mid-title">Join and Save The World!</h1>
+            <div className="unlogged__line-1">
+              <NavLink to="/register" className="unlogged__register-button">
+                Register
+              </NavLink>
+            </div>
+            <div className="unlogged__line-2"></div>
+            <div className="unlogged__line-3">
+              <NavLink to="/login" className="unlogged__login-button">
+                Login
+              </NavLink>
+            </div>
+            <div className="unlogged__line-4"></div>
+          </div>
+        </section>
+        <section className="unlogged__right-section">
+          <div className="unlogged__img-wrap">
+            <div className="unlogged__arrow-wrap">
+              <div className="unlogged__arrow"></div>
+            </div>
+            <div className="unlogged__arrow-wrap">
+              <div className="unlogged__arrow"></div>
+            </div>
+            <div className="unlogged__check">Check!</div>
+            <img
+              src={image3}
+              alt="promo"
+              ref={imageRef3}
+              onClick={handleGaleryActive}
+            />
+            <img
+              src={image2}
+              alt="promo"
+              ref={imageRef2}
+              onClick={handleGaleryActive}
+            />
+            <img
+              src={image1}
+              alt="promo"
+              ref={imageRef1}
+              onClick={handleGaleryActive}
+            />
+          </div>
+        </section>
+      </main>
+    </>
+  );
+};
 
 export default MainPageUnlogged;

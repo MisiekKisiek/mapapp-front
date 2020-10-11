@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { connect } from "react-redux";
 
 //Components
 import Marker from "./MarkerListItem";
 
-const MarkerList = ({
-  handleMarkerMapActiveItemTEST,
-  activeMarker,
-  markersAll,
-  removeMarker,
-  showMarkerList,
-  filterMarkers,
-  handleFilterMarkers,
-}) => {
+//Context
+import AppContext from "../context/AppContext";
+
+const MarkerList = ({ handleMarkerActiveItem, markersAll, removeMarker }) => {
+  const {
+    activeMarker,
+    filterMarkers,
+    showMarkerList,
+    handleFilterMarkers,
+  } = useContext(AppContext);
+
   const [filterValue, setfilterValue] = useState("");
 
   const handleFilterValue = (e) => {
@@ -43,7 +45,7 @@ const MarkerList = ({
           key={e._id}
           id={e._id}
           marker={e}
-          handleMarkerMapActiveItemTEST={handleMarkerMapActiveItemTEST}
+          handleMarkerActiveItem={handleMarkerActiveItem}
           activeMarker={activeMarker}
           removeMarker={removeMarker}
         ></Marker>

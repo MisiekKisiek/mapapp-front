@@ -3,7 +3,8 @@ import React, { useContext } from "react";
 //Context
 import AppContext from "../context/AppContext";
 
-const HeaderLogged = ({ logOut, handleShowMarkerList, showMarkerList }) => {
+const HeaderLogged = ({ logOut }) => {
+  const { handleShowMarkerList, showMarkerList } = useContext(AppContext);
   return (
     <>
       <header className="header-logged">

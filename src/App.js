@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 //Styles
@@ -7,7 +7,7 @@ import "./scss/Main.scss";
 //Components
 import MainPage from "./pages/MainPage";
 import Footer from "./components/Footer";
-import AlertComponent from "./components/AlertComponent";
+// import AlertComponent from "./components/AlertComponent";
 
 //Context
 import AppProvider from "./context/AppProvider";
