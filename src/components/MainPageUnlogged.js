@@ -1,6 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
+//Components
+import Canvas from "./Canvas";
+
 //Images
 import image1 from "../img/mainpageright1.jpg";
 import image2 from "../img/mainpageright2.jpg";
@@ -14,6 +17,11 @@ const MainPageUnlogged = () => {
   const imageRef3 = useRef(null);
   const imageRef2 = useRef(null);
   const imageRef1 = useRef(null);
+
+  const aboutSection1 = useRef(null);
+  const aboutSection2 = useRef(null);
+  const aboutSection3 = useRef(null);
+  const aboutSection4 = useRef(null);
 
   useEffect(() => {
     ParticlesFunc();
@@ -32,15 +40,16 @@ const MainPageUnlogged = () => {
   };
 
   const handleAboutSection = (e) => {
-    document
-      .querySelector(".unlogged__about--active")
-      .classList.remove("unlogged__about--active");
+    const sections = [aboutSection1,aboutSection2,aboutSection3,aboutSection4];
+    sections.forEach(section=>{
+      section.current.classList.remove('unlogged__about--active')})
     e.target.parentNode.classList.add("unlogged__about--active");
   };
 
   return (
     <>
       <main className="unlogged__wrap">
+        <Canvas></Canvas> 
         <canvas
           className="canvas-particles"
           id="myCanvas"
@@ -50,17 +59,14 @@ const MainPageUnlogged = () => {
         <div
           className="unlogged__curtain active"
           ref={curtain}
-          onClick={(e) => {
-            handleGaleryActive(e);
-          }}
+          onClick={handleGaleryActive}
         ></div>
         <section className="unlogged__left-section">
           <div className="unlogged_left-wrap">
-            <div className="unlogged__about unlogged__about--active unlogged__about-1">
+            <div className="unlogged__about unlogged__about--active unlogged__about-1" ref={aboutSection1}>
               <h2
-                onClick={(e) => {
-                  handleAboutSection(e);
-                }}
+
+                onClick={handleAboutSection}
               >
                 Who we are?
               </h2>
@@ -70,11 +76,10 @@ const MainPageUnlogged = () => {
                 lots of hours and a thousands lines of code.{" "}
               </p>
             </div>
-            <div className="unlogged__about unlogged__about-2">
+            <div className="unlogged__about unlogged__about-2" ref={aboutSection2}>
               <h2
-                onClick={(e) => {
-                  handleAboutSection(e);
-                }}
+              
+                onClick={handleAboutSection}
               >
                 What are we doing?
               </h2>
@@ -86,11 +91,12 @@ const MainPageUnlogged = () => {
                 NODEJS on back-end.
               </p>
             </div>
-            <div className="unlogged__about unlogged__about-3">
+            <div 
+                className="unlogged__about unlogged__about-3"
+                ref={aboutSection3}>
               <h2
-                onClick={(e) => {
-                  handleAboutSection(e);
-                }}
+              
+                onClick={handleAboutSection}
               >
                 About STW App!
               </h2>
@@ -100,11 +106,10 @@ const MainPageUnlogged = () => {
                 Your memories, this memories will be saved for eternity!
               </p>
             </div>
-            <div className="unlogged__about unlogged__about-4">
+            <div className="unlogged__about unlogged__about-4" ref={aboutSection4}>
               <h2
-                onClick={(e) => {
-                  handleAboutSection(e);
-                }}
+              
+                onClick={handleAboutSection}
               >
                 Stuff
               </h2>

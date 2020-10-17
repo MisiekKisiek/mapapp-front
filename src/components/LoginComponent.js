@@ -8,6 +8,7 @@ import { AUTH } from "../tools/apiPrefixes";
 const LoginComponent = ({ forceUpdateApp }) => {
   const [login, setlogin] = useState("");
   const [password, setpassword] = useState("");
+  const [invalidFormMessage, setinvalidFormMessage] = useState("");
 
   useEffect(() => {
     ParticlesFunc();
@@ -16,6 +17,7 @@ const LoginComponent = ({ forceUpdateApp }) => {
   const clearInputs = () => {
     setlogin("");
     setpassword("");
+    setinvalidFormMessage("");
   };
 
   const handleInput = (e) => {
@@ -31,8 +33,7 @@ const LoginComponent = ({ forceUpdateApp }) => {
     }
   };
 
-  const loginFetch = (e) => {
-    e.preventDefault();
+  const fetchLoginFunc = () => {
     fetch(`${AUTH}/login`, {
       method: "POST",
       mode: "cors",
@@ -45,17 +46,38 @@ const LoginComponent = ({ forceUpdateApp }) => {
       .then((e) => {
         if (e.ok === true) return e.json();
         clearInputs();
-        if (e.status === 401) throw Error("Username or login are invalid");
-        else throw Error("We have some problems, sorry");
+        if (e.status === 401) {
+          setinvalidFormMessage("Invalid login or password");
+          throw Error();
+        } else throw Error("We have some problems, sorry");
       })
       .then(async (e) => {
-        await sessionStorage.setItem("token", `${e.token}`);
-        await sessionStorage.setItem("user", e.user);
-        await sessionStorage.setItem("email", e.email);
-        await sessionStorage.setItem("logged", "logged");
-        forceUpdateApp();
+        if (e.token) {
+          await sessionStorage.setItem("token", `${e.token}`);
+          await sessionStorage.setItem("user", e.user);
+          await sessionStorage.setItem("email", e.email);
+          await sessionStorage.setItem("logged", "logged");
+          forceUpdateApp();
+        }
       })
-      .catch((err) => alert(err));
+      .catch((err) => {
+        alert(err);
+        console.log(err);
+      });
+  };
+
+  const formValidation = (fetchFunc) => {
+    if (login.length > 0 && password.length > 0) {
+      fetchFunc();
+      setinvalidFormMessage("");
+    } else {
+      setinvalidFormMessage("Login and password shouldn't be empty");
+    }
+  };
+
+  const loginFetch = (e) => {
+    e.preventDefault();
+    formValidation(fetchLoginFunc);
   };
 
   return (
@@ -69,7 +91,7 @@ const LoginComponent = ({ forceUpdateApp }) => {
         ></canvas>
         <div className="login__wrap">
           <h2 className="login__title">Login broo!</h2>
-          <span className="login__alert">Hejka sklejka</span>
+          <span className="login__alert">{invalidFormMessage}</span>
           <form className="login__form">
             <div className="login__input">
               <input

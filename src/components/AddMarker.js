@@ -1,18 +1,20 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 
 //Context
-import AppContext from "../context/AppContext";
+import AppLoggedContext from "../context/AppLoggedContext";
 
 const AddMarker = ({ addMarker }) => {
   const [name, setname] = useState("");
   const [place, setplace] = useState("");
   const [description, setdescription] = useState("");
 
+  const firstFocusedInput = useRef(null);
+
   const {
     addMarkerLat,
     addMarkerLng,
     handleAddMarkerElementVisible,
-  } = useContext(AppContext);
+  } = useContext(AppLoggedContext);
 
   const lat = addMarkerLat ? addMarkerLat : 52;
   const lng = addMarkerLng ? addMarkerLng : 21;
@@ -33,29 +35,28 @@ const AddMarker = ({ addMarker }) => {
     }
   };
 
-  const clearInputHooks = () => {
-    setname("");
-    setplace("");
-    setdescription("");
-  };
-
   const handleAddMarker = async (e) => {
     e.preventDefault();
     await addMarker(lat, lng, name, place, description);
     handleAddMarkerElementVisible("submit");
-    clearInputHooks();
   };
 
   const handleCancelMarker = (e) => {
     e.preventDefault();
     handleAddMarkerElementVisible("submit");
-    clearInputHooks();
   };
+
+  useEffect(() => {
+    firstFocusedInput.current.focus();
+  }, []);
 
   return (
     <>
       <div className="add-marker">
-        <div className="add-marker__courtine"></div>
+        <div
+          className="add-marker__courtine"
+          onClick={handleCancelMarker}
+        ></div>
         <div className="add-marker__wrap">
           <h3 className="add-marker__title">Add Marker</h3>
           <form className="add-marker__form">
@@ -65,7 +66,8 @@ const AddMarker = ({ addMarker }) => {
                 id="name"
                 type="text"
                 placeholder="title"
-                maxLength="10"
+                maxLength="15"
+                ref={firstFocusedInput}
                 value={name}
                 onChange={handleInputs}
               />
@@ -76,7 +78,7 @@ const AddMarker = ({ addMarker }) => {
                 id="place"
                 type="text"
                 placeholder="place"
-                maxLength="10"
+                maxLength="15"
                 value={place}
                 onChange={handleInputs}
               />
@@ -95,7 +97,7 @@ const AddMarker = ({ addMarker }) => {
               <button type="submit" onClick={handleAddMarker}>
                 Add
               </button>
-              <button type="reset" onClick={handleCancelMarker}>
+              <button type="cancel" onClick={handleCancelMarker}>
                 Cancel
               </button>
             </div>

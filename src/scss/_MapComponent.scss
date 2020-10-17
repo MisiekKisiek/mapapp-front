@@ -1,35 +1,39 @@
-@import './Variables';
-@import './Mixins';
+@import "./Variables";
+@import "./Mixins";
 
-.map{
-    img.leaflet-marker-icon{
-        background-attachment: none;
-        background-color: transparent;
-        border: none;
+.map {
+  img.leaflet-marker-icon {
+    background-attachment: none;
+    background-color: transparent;
+    border: none;
+  }
+  // margin-top: 60px;
+  height: calc(100vh - #{$footerHeight1024});
+  width: 100%;
+  .leaflet-left {
+    left: auto;
+    right: 0;
+    margin-bottom: 30px;
+    margin-right: 20px;
+  }
+  .leaflet-top {
+    top: auto;
+    bottom: 0;
+  }
+  .leaflet-popup-content {
+    .map__popup {
+      @include flex-mother($flex-direction: column);
+      max-width: 200px;
+      * {
+        word-wrap: break-word;
+      }
+      .map__popup-name {
+        font-weight: bold;
+      }
+      .map__popup-place {
+      }
+      .map__popup-description {
+      }
     }
-    // margin-top: 60px;
-    height: calc(100vh - #{$footerHeight1024});
-    width: 100%;
-    .leaflet-left{
-        left: auto;
-        right: 0;
-        margin-bottom: 30px;
-        margin-right: 20px;
-    }
-    .leaflet-top{
-        top:auto;
-        bottom: 0;
-    }
-    .leaflet-popup-content{
-        .map__popup{
-            @include flex-mother($flex-direction: column);
-            max-width: 200px;
-            .map__popup-name{
-                font-weight: bold;
-            };
-            .map__popup-place{};
-            .map__popup-description{};
-        }
-    }
-
+  }
 }

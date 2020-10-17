@@ -1,39 +1,63 @@
-@import './Mixins';
-@import './Variables';
+@import "./Mixins";
+@import "./Variables";
 //rgb(16, 51, 158)
 
-.header-unlogged{
-    position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height: $navHeight1024;
-    background-color: rgb(64, 98, 197);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.01), 0 5px 15px rgba(0,0,0,0.25);
-    .header-unlogged__wrap{
-        height: 100%;
-        width: 100%;
-        @include flex-mother($align-items: center);
-        *{
-            flex-basis: 70px;
-            text-decoration: none;
-            text-align: center;
-            font-size: 15px;
-            color: white;
-            transition: .2s;
-        }
-        *:hover{
-            color: rgb(215, 221, 228);
-        }
-        .header_unlogged__logo{
-            flex-grow: 1;
-            height: $navHeight1024;
-            margin-right: calc(100% - 70px * 3 - 30px);
-        }
-        .header-unlogged__link-login{
-        }
-        .header-unlogged__link-register{
-            margin-right: 15px;
-        }
+.header-unlogged {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $navHeight1024;
+  background-color: rgb(64, 98, 197);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.01), 0 5px 15px rgba(0, 0, 0, 0.25);
+  .header-unlogged__wrap {
+    height: 100%;
+    width: 100%;
+    @include flex-mother($align-items: center);
+    & > * {
+      flex-basis: 70px;
+      text-decoration: none;
+      text-align: center;
+      font-size: 15px;
+      color: white;
+      transition: 0.2s;
     }
+    &:nth-child(2) {
+      color: rgb(215, 221, 228);
+    }
+    .header_unlogged__logo {
+      @include flex-mother(
+        $justify-content: flex-start,
+        $align-items: flex-start
+      );
+      flex-basis: auto;
+      flex-grow: 1;
+      height: $navHeight1024;
+      margin: auto;
+      a {
+        @include flex-mother($align-items: center);
+        text-decoration: none;
+        img {
+          margin-left: 20px;
+          width: calc(#{$navHeight1024} - 10px);
+          transform: rotate(-27deg);
+          text-decoration: none;
+        }
+        p {
+          margin-left: 5px;
+          line-height: $navHeight1024;
+          text-align: left;
+          font-size: 20px;
+          color: white;
+        }
+      }
+    }
+    .header-unlogged__link-login {
+      flex-shrink: 0;
+    }
+    .header-unlogged__link-register {
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+  }
 }

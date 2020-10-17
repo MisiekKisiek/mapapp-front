@@ -9,6 +9,8 @@ export const ParticlesFunc = () => {
   }
 
   function animate() {
+    canvas.width = document.body.clientWidth;
+    canvas.height = document.body.clientHeight;
     context.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < maxParticles; i++) {
       let particle = particles[i];
@@ -49,8 +51,8 @@ export const ParticlesFunc = () => {
   let canvas = document.getElementById("myCanvas");
   let context = canvas.getContext("2d");
   let particles = [];
-  let particleSize = 3;
-  let maxParticles = 140;
+  let particleSize = 1;
+  let maxParticles = 180;
   let threshold = 100;
   for (let i = 0; i < maxParticles; i++) {
     let particle = {

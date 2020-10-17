@@ -10,7 +10,8 @@ import Footer from "./components/Footer";
 // import AlertComponent from "./components/AlertComponent";
 
 //Context
-import AppProvider from "./context/AppProvider";
+import AppLoggedProvider from "./context/AppLoggedProvider";
+import AppUnloggedProvider from "./context/AppUnloggedProvider";
 
 class App extends Component {
   constructor() {
@@ -36,7 +37,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    if (!sessionStorage.setItem("token", "")) {
+    if (sessionStorage.getItem("token") !== "") {
       sessionStorage.setItem("token", "");
       sessionStorage.setItem("logged", "logged");
       sessionStorage.setItem("user", "");
@@ -52,7 +53,8 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <AppProvider>
+        <AppLoggedProvider>
+          <AppUnloggedProvider>
           <div className="App">
             <MainPage
               logged={this.state.logged}
@@ -62,7 +64,8 @@ class App extends Component {
             <Footer />
             {/* <AlertComponent /> */}
           </div>
-        </AppProvider>
+          </AppUnloggedProvider>
+        </AppLoggedProvider>
       </Router>
     );
   }

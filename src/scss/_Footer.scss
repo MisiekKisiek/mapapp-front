@@ -1,6 +1,20 @@
-@import './Variables';
+@import "./Variables";
+@import "./Mixins";
 
-footer{
-    height: $footerHeight1024;
-    background-color: #333;
+footer {
+  @include flex-mother($align-items: center, $justify-content: center);
+  height: $footerHeight1024;
+  background-color: #333;
+  p {
+    font-size: 10px;
+    color: white;
+    a {
+      text-decoration: none;
+      color: white;
+    }
+    a:hover {
+      color: royalblue;
+      text-decoration: underline;
+    }
+  }
 }

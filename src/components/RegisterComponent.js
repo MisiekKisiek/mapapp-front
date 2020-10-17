@@ -9,6 +9,7 @@ const RegisterComponent = () => {
   const [login, setlogin] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const [invalidFormMessage, setinvalidFormMessage] = useState("");
 
   useEffect(() => {
     ParticlesFunc();
@@ -21,9 +22,8 @@ const RegisterComponent = () => {
     setpassword("");
   };
 
-  const registerFetch = async (e) => {
-    e.preventDefault();
-    await fetch(`${AUTH}/register`, {
+  const fetchRegisterFunc = () => {
+    fetch(`${AUTH}/register`, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
@@ -36,8 +36,25 @@ const RegisterComponent = () => {
       .then((e) => e.json())
       .then((e) => {
         clearInputs();
-        alert(e);
+        setinvalidFormMessage(e);
       });
+  };
+
+  const formValidation = (fetchFunc) => {
+    if (login.length < 7) {
+      setinvalidFormMessage("Login has to have 8 or more characters");
+    } else if (!email.includes("@") && !email.includes("."))
+      setinvalidFormMessage("Type correct email");
+    else if (password.length < 7)
+      setinvalidFormMessage("Password has to have 8 or more characters");
+    else {
+      fetchFunc();
+    }
+  };
+
+  const registerFetch = (e) => {
+    e.preventDefault();
+    formValidation(fetchRegisterFunc);
   };
 
   const handleInput = (e) => {
@@ -67,7 +84,15 @@ const RegisterComponent = () => {
         ></canvas>
         <div className="register__wrap">
           <h2 className="register__title">Register broo!</h2>
-          <span className="register__alert">Hejka sklejka</span>
+          <span
+            className={`register__alert ${
+              invalidFormMessage === "User has been registered successfully"
+                ? "register__alert--positive"
+                : ""
+            }`}
+          >
+            {invalidFormMessage}
+          </span>
           <form className="register__form">
             <div className="register__input">
               <input

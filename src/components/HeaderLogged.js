@@ -1,10 +1,33 @@
 import React, { useContext } from "react";
 
 //Context
-import AppContext from "../context/AppContext";
+import AppLoggedContext from "../context/AppLoggedContext";
+
+//images
+import markerLogo from "../img/markerLogo.png";
 
 const HeaderLogged = ({ logOut }) => {
-  const { handleShowMarkerList, showMarkerList } = useContext(AppContext);
+  const {
+    handleShowMarkerList,
+    showMarkerList,
+    handleActiveHelper,
+    handleSetCenter,
+  } = useContext(AppLoggedContext);
+
+  const logOutFunc = (e) => {
+    e.preventDefault();
+    logOut();
+  };
+
+  const activeHelperFunc = (e) => {
+    e.preventDefault();
+    handleActiveHelper();
+  };
+
+  const logoFunc = () => {
+    handleSetCenter(52.27407266590533, 20.981537103652958, 20);
+  };
+
   return (
     <>
       <header className="header-logged">
@@ -14,26 +37,25 @@ const HeaderLogged = ({ logOut }) => {
               className={`header-logged__marker-drop ${
                 showMarkerList ? "header-logged__marker-drop--active" : ""
               }`}
-              onClick={(e) => {
-                handleShowMarkerList();
-              }}
+              onClick={handleShowMarkerList}
             >
               Markers
             </button>
           </li>
           <li className="header-logged__item">
-            <div className="header-logged__logo">
-              <img src="" alt="" />
+            <div className="header-logged__logo" onClick={logoFunc}>
+              <img src={markerLogo} alt="logo" />
+              {` `}
+              <p>Save the world</p>
             </div>
           </li>
           <li className="header-logged__item">
-            <button
-              className="header-logged__logout"
-              onClick={(e) => {
-                e.preventDefault();
-                logOut();
-              }}
-            >
+            <button className="header-logged_help" onClick={activeHelperFunc}>
+              ?
+            </button>
+          </li>
+          <li className="header-logged__item">
+            <button className="header-logged__logout" onClick={logOutFunc}>
               Log out
             </button>
           </li>

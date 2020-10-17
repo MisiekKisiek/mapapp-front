@@ -1,12 +1,21 @@
-import { Icon, Point } from 'leaflet';
+import { Icon, Point } from "leaflet";
 
 const icon = new Icon({
-    iconUrl: require('../img/marker.svg'),
-    iconRetinaUrl: require('../img/marker.svg'),
-    iconAnchor: [20, 40],
-    popupAnchor: [0, -40],
-    iconSize: new Point(40, 40),
-    className: 'leaflet-div-icon'
+  iconUrl: require("../img/marker.png"),
+  iconRetinaUrl: require("../img/marker.png"),
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40],
+  iconSize: new Point(40, 40),
+  className: "leaflet-div-icon",
 });
 
-export { icon };
+const iconActive = new Icon({
+  iconUrl: require("../img/markerActive.png"),
+  iconRetinaUrl: require("../img/markerActive.png"),
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40],
+  iconSize: new Point(40, 40),
+  className: "leaflet-div-icon",
+});
+
+export { icon, iconActive };

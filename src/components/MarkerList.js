@@ -1,19 +1,21 @@
 import React, { useState, useContext } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 //Components
 import Marker from "./MarkerListItem";
 
 //Context
-import AppContext from "../context/AppContext";
+import AppLoggedContext from "../context/AppLoggedContext";
 
-const MarkerList = ({ handleMarkerActiveItem, markersAll, removeMarker }) => {
+const MarkerList = ({ handleMarkerActiveItem, removeMarker }) => {
   const {
     activeMarker,
     filterMarkers,
     showMarkerList,
     handleFilterMarkers,
-  } = useContext(AppContext);
+  } = useContext(AppLoggedContext);
+
+  const markersAll = useSelector(state => state.markers)
 
   const [filterValue, setfilterValue] = useState("");
 
@@ -40,16 +42,18 @@ const MarkerList = ({ handleMarkerActiveItem, markersAll, removeMarker }) => {
         }`;
         return allInfo.toLowerCase().includes(filter.toLowerCase());
       })
-      .map((e, index) => (
-        <Marker
-          key={e._id}
-          id={e._id}
-          marker={e}
-          handleMarkerActiveItem={handleMarkerActiveItem}
-          activeMarker={activeMarker}
-          removeMarker={removeMarker}
-        ></Marker>
-      ));
+      .map((e) => {
+        return (
+          <Marker
+            key={e._id}
+            id={e._id}
+            marker={e}
+            handleMarkerActiveItem={handleMarkerActiveItem}
+            activeMarker={activeMarker}
+            removeMarker={removeMarker}
+          ></Marker>
+        );
+      });
     return markers;
   };
 
@@ -61,22 +65,22 @@ const MarkerList = ({ handleMarkerActiveItem, markersAll, removeMarker }) => {
             <div className="marker__filter">
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Search marker..."
                 value={filterValue}
                 onChange={handleFilterValue}
               />
-              <button
-                onClick={handleRemoveFilter}
-                className="marker__form-clear"
-              >
-                <i className="fas fa-times-circle"></i>
-              </button>
               <button
                 type="submit"
                 className="marker__form-submit"
                 onClick={handleFilter}
               >
                 <i className="fas fa-search"></i>
+              </button>
+              <button
+                onClick={handleRemoveFilter}
+                className="marker__form-clear"
+              >
+                <i className="fas fa-times-circle"></i>
               </button>
             </div>
           </form>
@@ -89,8 +93,4 @@ const MarkerList = ({ handleMarkerActiveItem, markersAll, removeMarker }) => {
   );
 };
 
-const MSTP = (state) => {
-  return { markersAll: state.markers };
-};
-
-export default connect(MSTP)(MarkerList);
+export default MarkerList;

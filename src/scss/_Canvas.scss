@@ -1,0 +1,9 @@
+@import "./Variables";
+@import "./Mixins";
+
+.canvas__blue-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -4;
+}

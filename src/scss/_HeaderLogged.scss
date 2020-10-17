@@ -23,23 +23,28 @@
     .header-logged__item {
       @include flex-mother($align-items: center, $justify-content: center);
       position: relative;
-      flex-basis: 240px;
+      // flex-basis: 240px;
       & + .header-logged__item {
         flex-grow: 1;
         & + .header-logged__item {
           flex-grow: 0;
-          flex-basis: 200px;
+          flex-basis: 40px;
+          & + .header-logged__item {
+            flex-basis: 160px;
+            margin-right: 20px;
+          }
         }
       }
       .header-logged__marker-drop {
-        @include header-logged-btn();
+        @include header-logged-btn($height: 40px, $width: 170px);
+        margin-left: 40px;
         &:before,
         &:after {
           content: "";
           display: block;
           position: absolute;
           top: 0;
-          right: 50px;
+          right: 20px;
           height: 20px;
           width: 20px;
           margin-top: 10px;
@@ -58,7 +63,7 @@
           }
         }
         &:after {
-          right: 56px;
+          right: 26px;
         }
         &--active {
           &:before,
@@ -75,6 +80,27 @@
         }
       }
       .header-logged__logo {
+        @include flex-mother($align-items: center);
+        text-decoration: none;
+        cursor: pointer;
+        img {
+          margin-left: 20px;
+          width: calc(#{$navHeightLogged1024} - 50px);
+          transform: rotate(-27deg);
+          text-decoration: none;
+        }
+        p {
+          margin-left: 5px;
+          line-height: $navHeight1024;
+          text-align: left;
+          font-size: 22px;
+          color: white;
+        }
+      }
+      .header-logged_help {
+        flex-grow: 50px;
+        @include header-logged-btn($height: 40px, $width: 40px);
+        font-size: 20px;
       }
       .header-logged__logout {
         flex-grow: 200px;

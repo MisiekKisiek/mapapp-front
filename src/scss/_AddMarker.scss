@@ -2,21 +2,19 @@
 @import "./Variables";
 
 .add-marker {
-  &--active {
-    display: block;
-  }
-  // display: none;
   position: fixed;
   top: #{$navHeightLogged1024};
   left: 0;
   width: 100%;
   height: calc(100% - #{$navHeightLogged1024} - #{$footerHeight1024});
-  z-index: 666;
+  backdrop-filter: blur(1px);
+  z-index: 999;
   .add-marker__courtine {
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.4);
     filter: blur(3px);
+    cursor: pointer;
   }
   .add-marker__wrap {
     position: absolute;
@@ -52,6 +50,7 @@
         }
       }
       .add-marker__buttons {
+        margin: auto;
         button {
           @include add-marker-button();
         }
