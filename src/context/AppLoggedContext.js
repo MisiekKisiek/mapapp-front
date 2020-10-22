@@ -1,6 +1,9 @@
 import { createContext } from "react";
 
 const defaultValue = {
+  logIn: false,
+  handleLogOut: ()=>{},
+  handleLogIn: ()=>{},
   addMarkerComponentVisibility: false,
   handleAddMarkerElementVisible: () => {},
   addMarkerLat: 51,
@@ -16,8 +19,14 @@ const defaultValue = {
   handleShowMarkerList: () => {},
   filterMarkers: "",
   handleFilterMarkers: () => {},
-  activeHelper: true,
+  activeHelper: false,
   handleActiveHelper: () => {},
+  editMarkerState: false,
+  handleEditMarkerState: () => {},
+  editLatLng: [],
+  handleEditLatLng: ()=>{},
+  alertComponentVisibility:{visibility:false, callback:()=>{},message:""},
+  handleAlertComponentVisibility: ()=>{},
 };
 
 const AppLoggedContext = createContext(defaultValue);

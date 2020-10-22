@@ -119,7 +119,6 @@
         border-radius: 20px;
         border: 3px solid rgba(0, 0, 0, 0.2);
       }
-
       .marker__item {
         position: relative;
         height: 35px;
@@ -128,11 +127,42 @@
         border-radius: 20px;
         overflow: hidden;
         transition: 0.3s;
-        // cursor: pointer;
+        * input,
+        * textarea {
+          display: none;
+          width: 100%;
+          height: 20px;
+          margin: 0;
+          padding: 2px;
+          line-height: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.6);
+          border-radius: 3px;
+          color: white;
+          background-color: transparent;
+          resize: none;
+          cursor: text;
+          &::-webkit-scrollbar {
+            width: 6px;
+          }
+          &::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+          }
+          &::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            border: 3px solid rgba(0, 0, 0, 0.2);
+          }
+        }
+        * textarea {
+          height: 60px;
+        }
+        .marker__item-title input {
+          width: 90%;
+        }
         .marker__item-title {
+          @include flex-mother($align-items: center, $justify-content: center);
           position: relative;
           height: 35px;
-          line-height: 33px;
           border-radius: 20px;
           font-size: 14px;
           text-align: center;
@@ -140,7 +170,6 @@
           box-shadow: 0 0 10px 2px inset rgb(164, 176, 209);
           color: #fff;
           z-index: 111;
-          transition: 0.3s;
           cursor: pointer;
           &:active {
             box-shadow: 0 0 25px 2px inset rgb(164, 176, 209);
@@ -174,7 +203,11 @@
             font-size: 12px;
           }
         }
-        .marker__remove-btn {
+        .marker__edit-cancel {
+          display: none;
+        }
+        .marker__remove-btn,
+        .marker__edit-cancel {
           position: absolute;
           bottom: 0;
           right: 0;
@@ -198,9 +231,14 @@
             position: absolute;
             top: 43%;
             left: 43%;
+            cursor: pointer;
           }
         }
-        .marker__edit-btn {
+        .marker__edit-accept {
+          display: none;
+        }
+        .marker__edit-btn,
+        .marker__edit-accept {
           position: absolute;
           bottom: 0;
           left: 0;
@@ -224,10 +262,31 @@
             position: absolute;
             top: 43%;
             right: 40%;
+            cursor: pointer;
           }
         }
         &--active {
           height: 160px;
+        }
+      }
+      .marker__item--edit {
+        * {
+          cursor: default;
+          span {
+            display: none;
+          }
+          input,
+          textarea {
+            display: block;
+          }
+        }
+        .marker__remove-btn,
+        .marker__edit-btn {
+          display: none;
+        }
+        .marker__edit-cancel,
+        .marker__edit-accept {
+          display: block;
         }
       }
     }

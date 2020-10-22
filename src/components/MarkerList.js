@@ -7,7 +7,7 @@ import Marker from "./MarkerListItem";
 //Context
 import AppLoggedContext from "../context/AppLoggedContext";
 
-const MarkerList = ({ handleMarkerActiveItem, removeMarker }) => {
+const MarkerList = ({ handleMarkerActiveItem, removeMarker, editMarker }) => {
   const {
     activeMarker,
     filterMarkers,
@@ -46,11 +46,11 @@ const MarkerList = ({ handleMarkerActiveItem, removeMarker }) => {
         return (
           <Marker
             key={e._id}
-            id={e._id}
             marker={e}
             handleMarkerActiveItem={handleMarkerActiveItem}
             activeMarker={activeMarker}
             removeMarker={removeMarker}
+            editMarker={editMarker}
           ></Marker>
         );
       });

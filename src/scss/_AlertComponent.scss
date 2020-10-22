@@ -2,21 +2,19 @@
 @import "./Variables";
 
 .alert {
-  display: none;
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  // right: 0;
+  // bottom: 0;
   z-index: 999;
-  &--active {
-    display: block;
-  }
   &__courtine {
     height: 100%;
     width: 100%;
-    // background-color: rgb(255, 127, 80);
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.2);
   }
   .alert__wrap-message {
     @include flex-mother($flex-direction: column, $align-items: center);
@@ -28,33 +26,30 @@
     width: 320px;
     border-radius: 5px;
     overflow: hidden;
-    background-color: #fff;
-    //   border: 1px solid black;
+    background-color: rgba(54, 89, 192, 1);
+    border: 1px solid black;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.3);
+    color: #fff;
     .alert__title {
       flex-basis: 20%;
-      width: 100%;
+      width: 90%;
       line-height: 40px;
       text-align: center;
-      background-color: #222;
-      color: #fff;
+      background-color: rgba(54, 89, 192, 1);
+      border-bottom: 1px solid rgba(164, 176, 209, 0.4);
     }
     .alert__message {
       flex-basis: 50%;
       width: 100%;
       padding: 25px;
       text-align: center;
-      font-size: 18px;
+      font-size: 14px;
     }
     .alert__form {
       flex-basis: 30%;
       @include flex-mother($align-items: center, $justify-content: center);
       .alert__btn {
-        padding: 5px 20px;
-        border: 1px solid #222;
-        border-radius: 5px;
-        font-size: 18px;
-        background-color: transparent;
+        @include add-marker-button();
         cursor: pointer;
         &:active {
           box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.1) inset;

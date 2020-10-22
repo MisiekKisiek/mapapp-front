@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
+
+//Context
+import AppLoggedContext from "../context//AppLoggedContext";
 
 //Tools
 import { ParticlesFunc } from "../tools/particles";
 import { AUTH } from "../tools/apiPrefixes";
 
-const LoginComponent = ({ forceUpdateApp }) => {
+const LoginComponent = () => {
+
+  const {handleLogIn} = useContext(AppLoggedContext)
+
   const [login, setlogin] = useState("");
   const [password, setpassword] = useState("");
   const [invalidFormMessage, setinvalidFormMessage] = useState("");
@@ -53,11 +59,7 @@ const LoginComponent = ({ forceUpdateApp }) => {
       })
       .then(async (e) => {
         if (e.token) {
-          await sessionStorage.setItem("token", `${e.token}`);
-          await sessionStorage.setItem("user", e.user);
-          await sessionStorage.setItem("email", e.email);
-          await sessionStorage.setItem("logged", "logged");
-          forceUpdateApp();
+          handleLogIn(e.token,e.user,e.email)
         }
       })
       .catch((err) => {

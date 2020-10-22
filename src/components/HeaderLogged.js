@@ -4,19 +4,21 @@ import React, { useContext } from "react";
 import AppLoggedContext from "../context/AppLoggedContext";
 
 //images
-import markerLogo from "../img/markerLogo.png";
+import markerLogo from "../img/markerLogo1.png";
 
-const HeaderLogged = ({ logOut }) => {
+const HeaderLogged = () => {
   const {
+    handleLogOut,
     handleShowMarkerList,
     showMarkerList,
     handleActiveHelper,
     handleSetCenter,
+    handleAlertComponentVisibility,
   } = useContext(AppLoggedContext);
 
-  const logOutFunc = (e) => {
+  const logOutTriggerFunc = (e) => {
     e.preventDefault();
-    logOut();
+    handleAlertComponentVisibility(handleLogOut,"Do You want to log out?")
   };
 
   const activeHelperFunc = (e) => {
@@ -55,7 +57,7 @@ const HeaderLogged = ({ logOut }) => {
             </button>
           </li>
           <li className="header-logged__item">
-            <button className="header-logged__logout" onClick={logOutFunc}>
+            <button className="header-logged__logout" onClick={logOutTriggerFunc}>
               Log out
             </button>
           </li>

@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 //images
-import markerLogo from "../img/markerLogo.png";
+import markerLogo from "../img/markerLogo1.png";
 
 const HeaderUnlogged = () => {
   return (

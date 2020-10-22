@@ -17,10 +17,11 @@ import { API } from "../tools/apiPrefixes";
 //Context
 import AppLoggedContext from "../context/AppLoggedContext";
 
-const MainPageLogged = ({  logOut }) => {
+const MainPageLogged = () => {
 
   //Context-connect
   const {
+    handleLogOut,
     addMarkerComponentVisibility,
     curLat,
     curLng,
@@ -28,6 +29,7 @@ const MainPageLogged = ({  logOut }) => {
     activeMarker,
     handleActiveMarker,
     activeHelper,
+    handleEditMarkerState,
   } = useContext(AppLoggedContext);
 
 
@@ -39,7 +41,7 @@ const MainPageLogged = ({  logOut }) => {
 
 
   //API fetch funcs
-  const getAllMarkers = async (phase) => {
+  const getAllMarkers = async (phase,id) => {
     fetch(`${API}/getAllMarkers`, {
       headers: {
         Authorization: `bearer ${sessionStorage.getItem("token")}`,
@@ -49,7 +51,7 @@ const MainPageLogged = ({  logOut }) => {
         if (e.ok) {
           return e.json();
         } else {
-          logOut();
+          handleLogOut();
           throw Error("You have been logged out");
         }
       })
@@ -68,6 +70,10 @@ const MainPageLogged = ({  logOut }) => {
               markers
             );
             return;
+          } else if (id){
+            handleMarkerActiveItem(null,id,markers);
+            handleEditMarkerState();
+            return
           }
           handleMarkerActiveItem(null, markers[0]._id, markers);
         }
@@ -91,7 +97,7 @@ const MainPageLogged = ({  logOut }) => {
         if (e.ok) {
           return e.json();
         } else {
-          logOut();
+          handleLogOut();
           throw Error("You have been logged out");
         }
       })
@@ -100,9 +106,7 @@ const MainPageLogged = ({  logOut }) => {
       });
   };
 
-  const editMarker = (e) => {
-    const { lat, lng } = e.target._latlng;
-    const { id, name, place, description } = e.target.options;
+  const editMarker = (e, lat,lng,id,name,place,description) => {
     fetch(`${API}/editMarker`, {
       method: "PUT",
       headers: {
@@ -123,12 +127,12 @@ const MainPageLogged = ({  logOut }) => {
         if (e.ok) {
           return e.json();
         } else {
-          logOut();
+          handleLogOut();
           throw Error("You have been logged out");
         }
       })
-      .then((user) => {
-        getAllMarkers();
+      .then((message) => {
+        getAllMarkers(null,id);
       });
   };
 
@@ -146,7 +150,7 @@ const MainPageLogged = ({  logOut }) => {
         if (e.ok) {
           return e.json();
         } else {
-          logOut();
+          handleLogOut();
           throw Error("You have been logged out");
         }
       })
@@ -155,13 +159,14 @@ const MainPageLogged = ({  logOut }) => {
       });
   };
 
-  const handleMarkerActiveItem = (e, _id, _markers, a) => {
+  const handleMarkerActiveItem = (e, _id, _markers) => {
+    console.log('wyjscie')
     //set id, if it's given and if it's correct, then if it's in Marker or MarkerListItem
     let id = "";
     if (_id) id = _id;
     else if (e) {
-      if (e.target.options) id = e.target.options.id;
-      else if (e.target.dataset.markerid) id = e.target.dataset.markerid;
+      if (e.target.options) id = e.target.options.id
+      else if (e.target.closest('.marker__item')) id = e.target.closest('.marker__item').dataset.markerid;
     } else return;
 
     let findMarker = {};
@@ -170,20 +175,23 @@ const MainPageLogged = ({  logOut }) => {
       findMarker = _markers[_markers.findIndex((el) => el._id === id)];
     } else if (markersAll.length > 0) {
       findMarker = markersAll[markersAll.findIndex((el) => el._id === id)];
-    } else return;
+    }
+    else return
 
     //If it's MarkerListItem, Marker is in center and marker is open, hide activeMarker and return
-    if (
-      findMarker.lat === curLat &&
-      findMarker.lng === curLng &&
-      activeMarker !== null &&
-      e
-    ) {
-      if (e.target.dataset) {
-        handleActiveMarker(null);
-        return;
+    if(findMarker){
+      if (
+        findMarker.lat === curLat &&
+        findMarker.lng === curLng &&
+        activeMarker !== null &&
+        e
+      ) {
+        if (e.target.dataset) {
+          handleActiveMarker(null);
+          return;
+        }
       }
-    }
+    } else return
     //If not, set active marker and ...
     handleActiveMarker(id);
     //If it's map marker, don't set center, else set center
@@ -218,6 +226,7 @@ const MainPageLogged = ({  logOut }) => {
         <MarkerList
           handleMarkerActiveItem={handleMarkerActiveItem}
           removeMarker={removeMarker}
+          editMarker={editMarker}
         />
         <ContextMenu forwardRef={contextMenuRef} />
         {addMarkerToggle}

@@ -45,7 +45,7 @@ const text = () => {
       <p>
         To edit marker You just have to pull-out marker list and click edit
         button line on image below. Then You can customize and edit all
-        information about marker including it's position.
+        information about marker, including it's position.
         <img src={helperAddMarker} alt="helper" />
       </p>
     </>

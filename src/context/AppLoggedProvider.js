@@ -1,10 +1,27 @@
 import React, { Component } from "react";
 
+//Context
 import AppLoggedContext from "./AppLoggedContext";
 import { defaultValue } from "./AppLoggedContext";
 
 class AppLoggedProvider extends Component {
   state = defaultValue;
+
+  handleLogIn = (token,user,email) => {
+    sessionStorage.setItem("token", token);
+    sessionStorage.setItem("logged", "logged");
+    sessionStorage.setItem("user", user);
+    sessionStorage.setItem("email", email);
+    this.setState({logIn: true});
+  }
+
+  handleLogOut = () => {
+    sessionStorage.setItem("token", "");
+    sessionStorage.setItem("logged", "unlogged");
+    sessionStorage.setItem("user", "");
+    sessionStorage.setItem("email", "");
+    this.setState({logIn: false});
+  }
 
   handleAddMarkerElementVisible = (type) => {
     switch (type) {
@@ -81,10 +98,33 @@ class AppLoggedProvider extends Component {
     }));
   };
 
+  handleEditMarkerState=(id,lat,lng)=>{
+    this.setState({
+      editState: id,
+      editLatLng: [lat,lng],
+    })
+  }
+
+  handleEditLatLng = (lat,lng) => {
+    this.setState({
+      editLatLng: [lat,lng]
+    })
+  }
+
+  handleAlertComponentVisibility = (callback,message) => {
+    if(!callback) callback=()=>{};
+    if(!message) message="";
+    this.setState(prevState => ({
+      alertComponentVisibility: {visibility: !prevState.alertComponentVisibility.visibility,callback,message},
+    }))
+  }
+
   render() {
     return (
       <AppLoggedContext.Provider
         value={{
+          handleLogOut: this.handleLogOut,
+          handleLogIn:this. handleLogIn,
           addMarkerComponentVisibility: this.state.addMarkerComponentVisibility,
           handleAddMarkerElementVisible: this.handleAddMarkerElementVisible,
           handleSetCurrentZoom: this.handleSetCurrentZoom,
@@ -103,6 +143,12 @@ class AppLoggedProvider extends Component {
           handleFilterMarkers: this.handleFilterMarkers,
           activeHelper: this.state.activeHelper,
           handleActiveHelper: this.handleActiveHelper,
+          editMarkerState:this.state.editState,
+          handleEditMarkerState: this.handleEditMarkerState,
+          editLatLng: this.state.editLatLng,
+          handleEditLatLng: this.handleEditLatLng,
+          alertComponentVisibility: this.state.alertComponentVisibility,
+          handleAlertComponentVisibility: this.handleAlertComponentVisibility,
         }}
       >
         {this.props.children}

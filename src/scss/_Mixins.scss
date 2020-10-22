@@ -52,12 +52,12 @@
   }
 }
 
-@mixin arrow-item($size: 40px) {
+@mixin arrow-item($size: 40px, $top: 90%, $left: -20%) {
   content: "";
   display: block;
   position: absolute;
-  top: 90%;
-  left: -20%;
+  top: $top;
+  left: $left;
   width: calc(#{$size} / 3);
   height: calc(#{$size} / 3);
   background-color: royalblue;
@@ -102,7 +102,7 @@
     @include arrow-item($size);
   }
   &:after {
-    @include arrow-item($size);
+    @include arrow-item($size/1.3, 0%, -22%);
   }
 }
 

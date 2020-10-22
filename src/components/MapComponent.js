@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import AppLoggedContext from "../context/AppLoggedContext";
 
 //Images
-import { icon, iconActive } from "../tools/iconMarker";
+import { icon, iconActive, iconActiveEdit } from "../tools/iconMarker";
 
 const MapComponent = ({
   handleMarkerActiveItem,
@@ -22,6 +22,9 @@ const MapComponent = ({
     filterMarkers,
     activeMarker,
     handleAddMarkerPosition,
+    editMarkerState,
+    editLatLng,
+    handleEditLatLng,
   } = useContext(AppLoggedContext);
 
   const handleZoom = (e) => {
@@ -45,6 +48,8 @@ const MapComponent = ({
       .map((e) => {
         const { _id, name, place, description, lat, lng } = e;
 
+        const isEditing = editMarkerState === _id? true:false
+
         return lat && lng ? (
           <Marker
             key={_id}
@@ -52,11 +57,13 @@ const MapComponent = ({
             name={name}
             place={place}
             description={description}
-            position={[lat, lng]}
-            icon={activeMarker === _id ? iconActive : icon}
-            // draggable={true}
-            ondragend={async (e) => {
-              await editMarker(e);
+            position={isEditing?editLatLng:[lat, lng]}
+            icon={activeMarker === _id ? (isEditing?iconActiveEdit:iconActive) : icon}
+            draggable={isEditing}
+            ondragend={(e) => {
+              const lat = e.target._latlng.lat;
+              const lng = e.target._latlng.lng;
+              handleEditLatLng(lat,lng)
               handleMarkerActiveItem(e);
             }}
             onclick={(e) => {
@@ -69,8 +76,7 @@ const MapComponent = ({
             onClick={(e)=>{console.log(e)}}>
               <div className="map__popup">
                 <span className="map__popup-name">{name}</span>
-                <span className="map__popup-place">{place}</span>
-                <span className="map__popup-description">{description}</span>
+                <span className="map__popup-place">Place: {place}</span>
               </div>
             </Popup>
           </Marker>
@@ -95,7 +101,6 @@ const MapComponent = ({
           await handleAddMarkerPosition(lat, lng);
           handleContextMenuPosition(e);
         }}
-        onClick={(e)=>{console.log(e)}}
       >
         <TileLayer
           attribution={
