@@ -30,6 +30,7 @@ const MainPageLogged = () => {
     handleActiveMarker,
     activeHelper,
     handleEditMarkerState,
+    editMarkerState,
   } = useContext(AppLoggedContext);
 
 
@@ -160,7 +161,7 @@ const MainPageLogged = () => {
   };
 
   const handleMarkerActiveItem = (e, _id, _markers) => {
-    console.log('wyjscie')
+    handleEditMarkerState();
     //set id, if it's given and if it's correct, then if it's in Marker or MarkerListItem
     let id = "";
     if (_id) id = _id;
