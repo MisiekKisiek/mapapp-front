@@ -20,7 +20,7 @@ class AppLoggedProvider extends Component {
     sessionStorage.setItem("logged", "unlogged");
     sessionStorage.setItem("user", "");
     sessionStorage.setItem("email", "");
-    this.setState({logIn: false});
+    this.setState({logIn: false, filterMarkers:"", activeHelper:false, activeMarker:null, showMarkerList:true,editMarkerState:false, editLatLng: []});
   }
 
   handleAddMarkerElementVisible = (type) => {

@@ -63,12 +63,15 @@ const MapComponent = ({
             ondragend={(e) => {
               const lat = e.target._latlng.lat;
               const lng = e.target._latlng.lng;
-              handleEditLatLng(lat,lng)
-              handleMarkerActiveItem(e);
+              handleEditLatLng(lat,lng)          
             }}
             onclick={(e) => {
-              handleMarkerActiveItem(e);
-              handleSetCenter(lat, lng);
+              console.log(isEditing)
+              if(isEditing) return
+              else {
+                handleMarkerActiveItem(e);
+                handleSetCenter(lat, lng);
+              }
             }}
           >
             <Popup 
