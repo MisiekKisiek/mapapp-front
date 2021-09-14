@@ -4,7 +4,14 @@ import React, { useContext } from "react";
 import AppLoggedContext from "../context/AppLoggedContext";
 
 const ContextMenu = ({ forwardRef }) => {
-  const { handleAddMarkerElementVisible, handleActiveHelper, handleLogOut } = useContext(
+
+  //context
+  const { 
+    handleAddMarkerElementVisible, 
+    handleActiveHelper, 
+    handleLogOut, 
+    handleAlertComponentVisibility
+  } = useContext(
     AppLoggedContext
   );
 
@@ -25,7 +32,13 @@ const ContextMenu = ({ forwardRef }) => {
           <li className="context-menu__item" onClick={handleActiveHelper}>
             Help
           </li>
-          <li className="context-menu__item" onClick={handleLogOut}>
+          <li 
+            className="context-menu__item" 
+            onClick={()=>{
+              handleAlertComponentVisibility(handleLogOut,"Do You want to log out?");
+              sessionStorage.setItem("logged", "unlogged") 
+            }}
+          >
             Log out
           </li>
           <li className="context-menu__item">Close</li>

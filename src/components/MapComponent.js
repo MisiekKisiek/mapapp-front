@@ -11,7 +11,6 @@ import { icon, iconActive, iconActiveEdit } from "../tools/iconMarker";
 const MapComponent = ({
   handleMarkerActiveItem,
   markersAll,
-  editMarker,
   contextMenuRef,
 }) => {
   const {

@@ -14,10 +14,16 @@ import AppUnloggedProvider from "./context/AppUnloggedProvider";
 
 const App = () => {
   useEffect(() => {
-    if (sessionStorage.getItem("token") !== "") {
+    if(sessionStorage.getItem("token") === null){
       sessionStorage.setItem("token", "");
-      sessionStorage.setItem("logged", "logged");
+    }
+    if(sessionStorage.getItem("logged") === null){
+      sessionStorage.setItem("logged", "unlogged");
+    }
+    if(sessionStorage.getItem("user") === null){
       sessionStorage.setItem("user", "");
+    }
+    if(sessionStorage.getItem("email") === null){
       sessionStorage.setItem("email", "");
     }
     document.addEventListener("click", () => {

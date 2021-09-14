@@ -30,7 +30,6 @@ const MainPageLogged = () => {
     handleActiveMarker,
     activeHelper,
     handleEditMarkerState,
-    editMarkerState,
     handleAlertComponentVisibility,
   } = useContext(AppLoggedContext);
 
@@ -100,7 +99,7 @@ const MainPageLogged = () => {
           return e.json();
         } else {
           handleLogOut();
-          handleAlertComponentVisibility(handleLogOut,"You have been logged out")
+          handleAlertComponentVisibility(handleLogOut,"You have been logged out");
         }
       })
       .then((e) => {
@@ -130,7 +129,7 @@ const MainPageLogged = () => {
           return e.json();
         } else {
           handleLogOut();
-          handleAlertComponentVisibility(handleLogOut,"You have been logged out")
+          handleAlertComponentVisibility(handleLogOut,"You have been logged out");
         }
       })
       .then((message) => {
@@ -153,7 +152,7 @@ const MainPageLogged = () => {
           return e.json();
         } else {
           handleLogOut();
-          handleAlertComponentVisibility(handleLogOut,"You have been logged out")
+          handleAlertComponentVisibility(handleLogOut,"You have been logged out");
         }
       })
       .then((e) => {

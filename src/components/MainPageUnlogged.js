@@ -5,9 +5,9 @@ import { NavLink } from "react-router-dom";
 import Canvas from "./Canvas";
 
 //Images
-import image1 from "../img/mainpageright1.jpg";
-import image2 from "../img/mainpageright2.jpg";
-import image3 from "../img/mainpageright3.jpg";
+import image1 from "../img/mainpageright1.gif";
+import image2 from "../img/mainpageright2.png";
+import image3 from "../img/mainpageright3.gif";
 
 //Tools
 import { ParticlesFunc } from "../tools/particles";

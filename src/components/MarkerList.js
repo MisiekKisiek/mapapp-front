@@ -15,7 +15,7 @@ const MarkerList = ({ handleMarkerActiveItem, removeMarker, editMarker }) => {
     handleFilterMarkers,
   } = useContext(AppLoggedContext);
 
-  const markersAll = useSelector(state => state.markers)
+  const markersAll = useSelector(state => state.markers);
 
   const [filterValue, setfilterValue] = useState("");
 

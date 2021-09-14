@@ -78,7 +78,7 @@ const AddMarker = ({ addMarker }) => {
                 id="place"
                 type="text"
                 placeholder="place"
-                maxLength="15"
+                maxLength="20"
                 value={place}
                 onChange={handleInputs}
               />
@@ -88,7 +88,7 @@ const AddMarker = ({ addMarker }) => {
               <textarea
                 id="description"
                 placeholder="description"
-                maxLength="50"
+                maxLength="80"
                 value={description}
                 onChange={handleInputs}
               ></textarea>

@@ -7,6 +7,8 @@ import AppLoggedContext from "../context/AppLoggedContext";
 import markerLogo from "../img/markerLogo1.png";
 
 const HeaderLogged = () => {
+
+  //Context
   const {
     handleLogOut,
     handleShowMarkerList,
@@ -18,7 +20,7 @@ const HeaderLogged = () => {
 
   const logOutTriggerFunc = (e) => {
     e.preventDefault();
-    handleAlertComponentVisibility(handleLogOut,"Do You want to log out?")
+    handleAlertComponentVisibility(handleLogOut,"Do You want to log out?");
   };
 
   const activeHelperFunc = (e) => {

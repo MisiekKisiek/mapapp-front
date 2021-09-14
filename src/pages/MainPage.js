@@ -18,13 +18,13 @@ const MainPage = () => {
   const {alertComponentVisibility} = useContext(AppLoggedContext);
 
   const renderHeaderComponent =
-    sessionStorage.getItem("logged") === "unlogged" ? (<HeaderUnlogged />) : (<HeaderLogged/>);
+    sessionStorage.getItem("logged") === "logged" ? (<HeaderLogged/>) : (<HeaderUnlogged/>);
   const renderLoggedPage =
-    sessionStorage.getItem("logged") === "unlogged" ? (<MainPageUnlogged></MainPageUnlogged>) : (<MainPageLogged/>);
+    sessionStorage.getItem("logged") === "logged" ? (<MainPageLogged/>) : (<MainPageUnlogged/>)  ;
   const renderLoginComponent =
-    sessionStorage.getItem("logged") === "unlogged" ? (<LoginComponent />) : (<Redirect to="/"></Redirect>);
+    (sessionStorage.getItem("logged") === "unlogged" || sessionStorage.getItem("logged") === null) ? (<LoginComponent/>) : (<Redirect to="/"/>) ;
   const renderRegisterComponent =
-    sessionStorage.getItem("logged") === "unlogged" ? (<RegisterComponent/>) : (<Redirect to="/"></Redirect>);
+    (sessionStorage.getItem("logged") === "unlogged" || sessionStorage.getItem("logged") === null) ? (<RegisterComponent/>) : (<Redirect to="/"/>);
   const renderAlertComponent = alertComponentVisibility.visibility?<AlertComponent/>:null;
   return (
     <>

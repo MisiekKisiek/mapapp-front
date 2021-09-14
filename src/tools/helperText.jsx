@@ -3,6 +3,8 @@ import React from "react";
 //Images
 import helperAddMarker from "../img/helperAddMarker.gif";
 import helperAddMarker2 from "../img/helperAddMarker2.gif";
+import helperAddMarker3 from "../img/helperAddMarker3.gif";
+import helperAddMarker4 from "../img/helperAddMarker4.gif";
 
 const text = () => {
   return (
@@ -20,7 +22,7 @@ const text = () => {
         <span>How to add marker?</span>
       </div>
       <p>
-        Adding marker is quite s1mple like boil water. First You have to right
+        Adding marker is quite s1mple like boiling water. First You have to right
         mouse click on map, then the menu will appear like on image below.
         <img src={helperAddMarker} alt="helper" />
         After clicking on dropped menu add marker button, there will show a
@@ -29,6 +31,16 @@ const text = () => {
       </p>
       <div>
         <span>2</span>
+        <span>How to edit marker?</span>
+      </div>
+      <p>
+        To edit marker You just have to pull-out marker list and click edit
+        button line on image below. Then You can customize and edit all
+        information about marker, including it's position.
+        <img src={helperAddMarker3} alt="helper" />
+      </p>
+      <div>
+        <span>3</span>
         <span>How to remove marker?</span>
       </div>
       <p>
@@ -36,17 +48,7 @@ const text = () => {
         list, localize marker You want to remove and finally click on the remove
         button like on image down below. (If You have too much markers, it's
         good to use search input to find search marker).
-        <img src={helperAddMarker} alt="helper" />
-      </p>
-      <div>
-        <span>3</span>
-        <span>How to edit marker?</span>
-      </div>
-      <p>
-        To edit marker You just have to pull-out marker list and click edit
-        button line on image below. Then You can customize and edit all
-        information about marker, including it's position.
-        <img src={helperAddMarker} alt="helper" />
+        <img src={helperAddMarker4} alt="helper" />
       </p>
     </>
   );

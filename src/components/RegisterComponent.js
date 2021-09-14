@@ -41,8 +41,8 @@ const RegisterComponent = () => {
   };
 
   const formValidation = (fetchFunc) => {
-    if (login.length < 7) {
-      setinvalidFormMessage("Login has to have 8 or more characters");
+    if (login.length < 5) {
+      setinvalidFormMessage("Login has to have 5 or more characters");
     } else if (!email.includes("@") && !email.includes("."))
       setinvalidFormMessage("Type correct email");
     else if (password.length < 7)
@@ -83,7 +83,7 @@ const RegisterComponent = () => {
           height="1200"
         ></canvas>
         <div className="register__wrap">
-          <h2 className="register__title">Register broo!</h2>
+          <h2 className="register__title">Register!</h2>
           <span
             className={`register__alert ${
               invalidFormMessage === "User has been registered successfully"

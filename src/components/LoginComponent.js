@@ -10,7 +10,7 @@ import { AUTH } from "../tools/apiPrefixes";
 
 const LoginComponent = () => {
 
-  const {handleLogIn} = useContext(AppLoggedContext)
+  const {handleLogIn} = useContext(AppLoggedContext);
 
   const [login, setlogin] = useState("");
   const [password, setpassword] = useState("");
@@ -63,7 +63,6 @@ const LoginComponent = () => {
         }
       })
       .catch((err) => {
-        alert(err);
         console.log(err);
       });
   };
@@ -92,7 +91,7 @@ const LoginComponent = () => {
           height="1200"
         ></canvas>
         <div className="login__wrap">
-          <h2 className="login__title">Login broo!</h2>
+          <h2 className="login__title">Log In!</h2>
           <span className="login__alert">{invalidFormMessage}</span>
           <form className="login__form">
             <div className="login__input">

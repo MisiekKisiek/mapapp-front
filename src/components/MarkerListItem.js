@@ -16,7 +16,8 @@ const MarkerListItem = ({
     editMarkerState,
     handleEditMarkerState,
     editLatLng,
-    handleAlertComponentVisibility,} = useContext(AppLoggedContext);
+    handleAlertComponentVisibility
+  } = useContext(AppLoggedContext);
 
   const [nameEdit, setnameEdit] = useState(name);
   const [placeEdit, setplaceEdit] = useState(place);
@@ -80,16 +81,32 @@ const MarkerListItem = ({
           onClick={handleActiveMarker}
         >
           <span>{name}</span>
-          <input type="text" value={nameEdit} onChange={(e)=>{setnameEdit(e.target.value)}}/>
+          <input 
+            type="text" 
+            maxLength="15"
+            value={nameEdit} 
+            onChange={(e)=>{setnameEdit(e.target.value)}}
+          />
         </h2>
         <section className="marker__item-section">
           <p className="marker__place">
             <span>Place: <span>{place}</span></span>
-            <input type="text" value={placeEdit} onChange={(e)=>{setplaceEdit(e.target.value)}}/>
+            <input 
+              type="text" 
+              maxLength="20"
+              value={placeEdit} 
+              onChange={(e)=>{setplaceEdit(e.target.value)}}
+            />
           </p>
           <p className="marker__description">
             <span>{description}</span>
-            <textarea name="desctiprion" id="desctiprion" value={descriptionEdit} onChange={(e)=>{setdescriptionEdit(e.target.value)}}></textarea>
+            <textarea 
+              name="desctiprion" 
+              id="desctiprion" 
+              maxLength="80"
+              value={descriptionEdit} 
+              onChange={(e)=>{setdescriptionEdit(e.target.value)}}
+            />
           </p>
         </section>
         <button className="marker__remove-btn" onClick={removeMarkerTriggerFunc}>
